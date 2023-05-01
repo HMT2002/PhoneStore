@@ -33,6 +33,12 @@ const voucherSchema = new mongoose.Schema({
     required: false,
     default: "There is no description",
   },
+  product: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Product",
+    default: null,
+    required: [true, "Voucher required product"],
+  },
 });
 
 voucherSchema.pre("save", async function (next) {
