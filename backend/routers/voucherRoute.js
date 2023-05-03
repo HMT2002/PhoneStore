@@ -15,6 +15,28 @@ router
 router.route("/voucher/:id").get(voucherController.getVoucherDetails);
 
 router
+  .route("/admin/voucherCategory/new")
+  .post(
+    isAuthenticatedUser,
+    authorieRoles("admin"),
+    voucherController.createVoucherCategory
+  );
+router
+  .route("/admin/voucherCategory/:id")
+  .put(
+    isAuthenticatedUser,
+    authorieRoles("admin"),
+    voucherController.updateVoucherCategory
+  );
+router
+  .route("/admin/voucherCategory/:id")
+  .delete(
+    isAuthenticatedUser,
+    authorieRoles("admin"),
+    voucherController.deleteVouchersCategory
+  );
+
+router
   .route("/admin/voucher/new")
   .post(
     isAuthenticatedUser,

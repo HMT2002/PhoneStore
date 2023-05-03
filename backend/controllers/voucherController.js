@@ -1,4 +1,5 @@
 const Voucher = require("../models/voucherModel");
+const VoucherCategory = require("../models/voucherCategoryModel");
 const ErrorHander = require("../utils/errorhander");
 const catchAsynError = require("../middleware/catchAsynError");
 const ApiFeatures = require("../utils/apifeatures");
@@ -13,19 +14,6 @@ exports.createVoucher = catchAsynError(async (req, res, next) => {
     images = req.body.images;
   }
 
-  const imagesLinks = [];
-
-  for (let i = 0; i < images.length; i++) {
-    const result = await cloudinary.v2.uploader.upload(images[i], {
-      folder: "Vouchers",
-    });
-
-    imagesLinks.push({
-      public_id: result.public_id,
-      url: result.secure_url,
-    });
-  }
-
   req.body.images = imagesLinks;
   req.body.user = req.user.id;
 
@@ -36,86 +24,63 @@ exports.createVoucher = catchAsynError(async (req, res, next) => {
     voucher,
   });
 });
+
+exports.createVoucherCategory = catchAsynError(async (req, res, next) => {
+  const voucherCategory = await VoucherCategory.create(req.body);
+
+  res.status(201).json({
+    success: true,
+    voucherCategory,
+  });
+});
 exports.getAllVouchers = catchAsynError(async (req, res) => {
   console.log("access");
   const resultPerPage = 8;
-  const productsCount = await Voucher.countDocuments();
+  const vouchersCount = await Voucher.countDocuments();
 
   const apiFeature = new ApiFeatures(Voucher.find(), req.query)
     .search()
     .filter();
 
-  // let products = await apiFeature.query.clone();
+  let vouchers = await apiFeature.query.clone();
 
-  let products = await Voucher.find({});
-
-  let filteredVouchersCount = products.length;
+  let filteredVouchersCount = vouchers.length;
 
   apiFeature.pagination(resultPerPage);
 
-  // products = await apiFeature.query;
+  // vouchers = await apiFeature.query;
 
-  // products = await apiFeature.query;
-
-  console.log(products);
-  console.log(productsCount);
-  console.log(resultPerPage);
-  console.log(filteredVouchersCount);
+  //   console.log(vouchers);
+  //   console.log(vouchersCount);
+  //   console.log(resultPerPage);
+  //   console.log(filteredVouchersCount);
 
   res.status(200).json({
     success: true,
-    products,
-    productsCount,
+    vouchers,
+    vouchersCount,
     resultPerPage,
     filteredVouchersCount,
   });
 });
 //admim
 exports.getAdminVouchers = catchAsynError(async (req, res, next) => {
-  const products = await Voucher.find();
+  const vouchers = await Voucher.find();
 
   res.status(200).json({
     success: true,
-    products,
+    vouchers,
   });
 });
 //admin
 exports.updateVoucher = catchAsynError(async (req, res, next) => {
-  let product = await Voucher.findById(req.params.id);
+  let voucher = await Voucher.findById(req.params.id);
 
-  if (!product) {
-    return next(new ErrorHander("Không tìm thấy sản phẩm", 404));
-  }
-  let images = [];
-
-  if (typeof req.body.images === "string") {
-    images.push(req.body.images);
-  } else {
-    images = req.body.images;
+  if (!voucher) {
+    return next(new ErrorHander("Không tìm thấy giảm giá", 404));
   }
 
-  if (images !== undefined) {
-    for (let i = 0; i < product.images.length; i++) {
-      await cloudinary.v2.uploader.destroy(product.images[i].public_id);
-    }
-
-    const imagesLinks = [];
-
-    for (let i = 0; i < images.length; i++) {
-      const result = await cloudinary.v2.uploader.upload(images[i], {
-        folder: "products",
-      });
-
-      imagesLinks.push({
-        public_id: result.public_id,
-        url: result.secure_url,
-      });
-    }
-
-    req.body.images = imagesLinks;
-  }
-
-  product = await Voucher.findByIdAndUpdate(req.params.id, req.body, {
+  voucher = await Voucher.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
     useFindAndModify: false,
@@ -123,37 +88,69 @@ exports.updateVoucher = catchAsynError(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    product,
+    voucher,
   });
 });
 
 //admim
 exports.deleteVouchers = catchAsynError(async (req, res, next) => {
-  const product = await Voucher.findById(req.params.id);
-  if (!product) {
-    return next(new ErrorHander("Không tìm thấy sản phẩm", 404));
+  const voucher = await Voucher.findById(req.params.id);
+  if (!voucher) {
+    return next(new ErrorHander("Không tìm thấy giảm giá", 404));
   }
-  for (let i = 0; i < product.images.length; i++) {
-    await cloudinary.v2.uploader.destroy(product.images[i].public_id);
-  }
-  await product.remove();
+
+  await voucher.remove();
   res.status(200).json({
     success: true,
-    message: "XÓa sản phẩm thành công",
+    message: "XÓa giảm giá thành công",
   });
 });
+
+exports.updateVoucherCategory = catchAsynError(async (req, res, next) => {
+  let voucher = await VoucherCategory.findById(req.params.id);
+
+  if (!voucher) {
+    return next(new ErrorHander("Không tìm thấy giảm giá", 404));
+  }
+
+  voucher = await Voucher.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
+
+  res.status(200).json({
+    success: true,
+    voucher,
+  });
+});
+
+//admim
+exports.deleteVouchersCategory = catchAsynError(async (req, res, next) => {
+  const voucher = await VoucherCategory.findById(req.params.id);
+  if (!voucher) {
+    return next(new ErrorHander("Không tìm thấy giảm giá", 404));
+  }
+
+  await voucher.remove();
+  res.status(200).json({
+    success: true,
+    message: "XÓa giảm giá thành công",
+  });
+});
+
 exports.getVoucherDetails = catchAsynError(async (req, res, next) => {
-  const product = await Voucher.findById(req.params.id);
-  if (!product) {
+  const voucher = await Voucher.findById(req.params.id);
+  if (!voucher) {
     return next(new ErrorHander("Không tìm thấy sản phẩm", 404));
   }
   res.status(200).json({
     success: true,
-    product,
+    voucher,
   });
 });
 exports.createVoucherReview = catchAsynError(async (req, res, next) => {
-  const { rating, comment, productId } = req.body;
+  const { rating, comment, voucherId } = req.body;
 
   const review = {
     user: req.user._id,
@@ -162,48 +159,48 @@ exports.createVoucherReview = catchAsynError(async (req, res, next) => {
     comment,
   };
 
-  const product = await Voucher.findById(productId);
+  const voucher = await Voucher.findById(voucherId);
 
-  const isReviewed = product.reviews.find(
+  const isReviewed = voucher.reviews.find(
     (rev) => rev.user.toString() === req.user._id.toString()
   );
   if (isReviewed) {
-    product.reviews.forEach((rev) => {
+    voucher.reviews.forEach((rev) => {
       if (rev.user.toString() === req.user._id.toString())
         (rev.rating = rating), (rev.comment = comment);
     });
   } else {
-    product.reviews.push(review);
-    product.numOfReviews = product.reviews.length;
+    voucher.reviews.push(review);
+    voucher.numOfReviews = voucher.reviews.length;
   }
   let avg = 0;
-  product.reviews.forEach((rev) => {
+  voucher.reviews.forEach((rev) => {
     avg += rev.rating;
   });
-  product.ratings = avg / product.reviews.length;
-  await product.save({ validateBeforeSave: false });
+  voucher.ratings = avg / voucher.reviews.length;
+  await voucher.save({ validateBeforeSave: false });
   res.status(200).json({
     success: true,
   });
 });
 exports.getVoucherReviews = catchAsynError(async (req, res, next) => {
-  const product = await Voucher.findById(req.query.id);
+  const voucher = await Voucher.findById(req.query.id);
 
-  if (!product) {
+  if (!voucher) {
     return next(new ErrorHander("Không tìm thấy sản phẩm", 404));
   }
 
   res.status(200).json({
     success: true,
-    reviews: product.reviews,
+    reviews: voucher.reviews,
   });
 });
 exports.deleteReview = catchAsynError(async (req, res, next) => {
-  const product = await Voucher.findById(req.query.productId);
-  if (!product) {
+  const voucher = await Voucher.findById(req.query.voucherId);
+  if (!voucher) {
     return next(new ErrorHander("Không tìm thấy sản phẩm", 404));
   }
-  const reviews = product.reviews.filter(
+  const reviews = voucher.reviews.filter(
     (rev) => rev._id.toString() !== req.query.id.toString()
   );
   let avg = 0;
@@ -219,7 +216,7 @@ exports.deleteReview = catchAsynError(async (req, res, next) => {
   const numOfReviews = reviews.length;
 
   await Voucher.findByIdAndUpdate(
-    req.query.productId,
+    req.query.voucherId,
     {
       reviews,
       ratings,
