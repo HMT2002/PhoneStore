@@ -32,6 +32,6 @@ voucherStatusSchema.pre("save", async function (next) {
   next();
 });
 
-const VoucherStatus = mongoose.model("Voucher", voucherStatusSchema);
+const VoucherStatus = mongoose.model("VoucherStatus", voucherStatusSchema);
 
 module.exports = VoucherStatus;

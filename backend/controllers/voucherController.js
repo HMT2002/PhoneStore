@@ -1,22 +1,13 @@
 const Voucher = require("../models/voucherModel");
 const VoucherCategory = require("../models/voucherCategoryModel");
+const VoucherStatus = require("../models/voucherStatusModel");
+
 const ErrorHander = require("../utils/errorhander");
 const catchAsynError = require("../middleware/catchAsynError");
 const ApiFeatures = require("../utils/apifeatures");
 
 //admin
 exports.createVoucher = catchAsynError(async (req, res, next) => {
-  let images = [];
-
-  if (typeof req.body.images === "string") {
-    images.push(req.body.images);
-  } else {
-    images = req.body.images;
-  }
-
-  req.body.images = imagesLinks;
-  req.body.user = req.user.id;
-
   const voucher = await Voucher.create(req.body);
 
   res.status(201).json({
@@ -31,6 +22,15 @@ exports.createVoucherCategory = catchAsynError(async (req, res, next) => {
   res.status(201).json({
     success: true,
     voucherCategory,
+  });
+});
+
+exports.createVoucherStatus = catchAsynError(async (req, res, next) => {
+  const voucherStatus = await VoucherStatus.create(req.body);
+
+  res.status(201).json({
+    success: true,
+    voucherStatus,
   });
 });
 exports.getAllVouchers = catchAsynError(async (req, res) => {
@@ -107,35 +107,66 @@ exports.deleteVouchers = catchAsynError(async (req, res, next) => {
 });
 
 exports.updateVoucherCategory = catchAsynError(async (req, res, next) => {
-  let voucher = await VoucherCategory.findById(req.params.id);
+  let voucherCategory = await VoucherCategory.findById(req.params.id);
 
-  if (!voucher) {
-    return next(new ErrorHander("Không tìm thấy giảm giá", 404));
+  if (!voucherCategory) {
+    return next(new ErrorHander("Không tìm thấy phân loại giảm giá", 404));
   }
 
-  voucher = await Voucher.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-    useFindAndModify: false,
-  });
+  voucherCategory = await VoucherCategory.findByIdAndUpdate(
+    req.params.id,
+    req.body
+  );
 
   res.status(200).json({
     success: true,
-    voucher,
+    voucherCategory,
   });
 });
 
 //admim
 exports.deleteVouchersCategory = catchAsynError(async (req, res, next) => {
-  const voucher = await VoucherCategory.findById(req.params.id);
-  if (!voucher) {
-    return next(new ErrorHander("Không tìm thấy giảm giá", 404));
+  const voucherCategory = await VoucherCategory.findById(req.params.id);
+  if (!voucherCategory) {
+    return next(new ErrorHander("Không tìm thấy phân loại giảm giá", 404));
   }
 
-  await voucher.remove();
+  await voucherCategory.remove();
   res.status(200).json({
     success: true,
-    message: "XÓa giảm giá thành công",
+    message: "Xóa phân loại giảm giá thành công",
+  });
+});
+
+exports.updateVoucherStatus = catchAsynError(async (req, res, next) => {
+  let voucherStatus = await VoucherStatus.findById(req.params.id);
+
+  if (!voucherStatus) {
+    return next(new ErrorHander("Không tìm thấy trạng thái giảm giá", 404));
+  }
+
+  voucherStatus = await VoucherStatus.findByIdAndUpdate(
+    req.params.id,
+    req.body
+  );
+
+  res.status(200).json({
+    success: true,
+    voucherStatus,
+  });
+});
+
+//admim
+exports.deleteVouchersStatus = catchAsynError(async (req, res, next) => {
+  const voucherStatus = await VoucherStatus.findById(req.params.id);
+  if (!voucherStatus) {
+    return next(new ErrorHander("Không tìm thấy trạng thái giảm giá", 404));
+  }
+
+  await voucherStatus.remove();
+  res.status(200).json({
+    success: true,
+    message: "Xóa trạng thái giảm giá thành công",
   });
 });
 

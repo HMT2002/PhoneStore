@@ -37,6 +37,28 @@ router
   );
 
 router
+  .route("/admin/voucherStatus/new")
+  .post(
+    isAuthenticatedUser,
+    authorieRoles("admin"),
+    voucherController.createVoucherStatus
+  );
+router
+  .route("/admin/voucherStatus/:id")
+  .put(
+    isAuthenticatedUser,
+    authorieRoles("admin"),
+    voucherController.updateVoucherStatus
+  );
+router
+  .route("/admin/voucherStatus/:id")
+  .delete(
+    isAuthenticatedUser,
+    authorieRoles("admin"),
+    voucherController.deleteVouchersStatus
+  );
+
+router
   .route("/admin/voucher/new")
   .post(
     isAuthenticatedUser,
