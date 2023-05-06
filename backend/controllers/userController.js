@@ -20,8 +20,8 @@ exports.registerUser = catchAsynError(async (req, res, next) => {
     email,
     password,
     avatar: {
-      public_id: myCloud.public_id,
-      url: myCloud.secure_url,
+      public_id: myCloud.public_id||'wimvfig2ymiuqjyb7yxg',
+      url: myCloud.secure_url||'https://res.cloudinary.com/dd6jkjkfp/image/upload/v1660662644/wimvfig2ymiuqjyb7yxg.jpg',
     },
   });
   sendToken(user, 201, res);
