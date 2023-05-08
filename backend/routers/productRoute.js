@@ -13,6 +13,8 @@ const {
   deleteReview,
 } = require("../controllers/productController");
 
+const guaranteeController=require("../controllers/guaranteeController");
+
 router.route("/products").get(getAllProducts);
 router
   .route("/admin/products")

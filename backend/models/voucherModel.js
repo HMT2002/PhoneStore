@@ -39,6 +39,11 @@ const voucherSchema = new mongoose.Schema({
     default: null,
     required: [true, "Voucher required product"],
   },
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: "UserMaintaince",
+    required:[true, "Voucher required user"],
+  },
 });
 
 voucherSchema.pre("save", async function (next) {

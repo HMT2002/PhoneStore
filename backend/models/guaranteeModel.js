@@ -23,6 +23,11 @@ const guaranteenSchema = new mongoose.Schema({
     default: null,
     required: [true, "Guaranteen required product"],
   },
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: "UserMaintaince",
+    required:[true, "Guaranteen required product"],
+  },
 });
 
 guaranteenSchema.pre("save", async function (next) {

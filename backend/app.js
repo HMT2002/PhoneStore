@@ -18,12 +18,14 @@ const user = require("./routers/userRoute");
 const order = require("./routers/orderRoute");
 const payment = require("./routers/paymentRoute");
 const voucher = require("./routers/voucherRoute");
+const guarantee = require("./routers/guaranteeRoute");
 
 app.use("/api/v1", product);
 app.use("/api/v1", user);
 app.use("/api/v1", order);
 app.use("/api/v1", payment);
 app.use("/api/v1/voucher", voucher);
+app.use("/api/v1/guarantee", guarantee);
 
 //Middleware for Error
 app.use(errorMiddleware);
