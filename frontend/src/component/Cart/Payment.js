@@ -30,13 +30,13 @@ const Payment = ({ history }) => {
 
     const paymentData = {
         amount: Math.round(orderInfo.totalPrice * 100),
-        guarantee:{
-            code:"123456789",
-            expireDate:"2023-07-06T16:37:55.840+00:00",
-            description:"no description",
-            product:"645685eb0830fcfb9d581ddc",
-            user:"645682633a497d75f4cd4091"
-        }
+        // guarantee:{
+        //     code:"123456789",
+        //     expireDate:"2023-07-06T16:37:55.840+00:00",
+        //     description:"no description",
+        //     product:"645685eb0830fcfb9d581ddc",
+        //     user:"645682633a497d75f4cd4091"
+        // }
     };
 
     const order = {
@@ -61,7 +61,7 @@ const Payment = ({ history }) => {
             };
             const { data } = await axios.post(
                 "/api/v1/payment/process",
-                paymentData,
+                {...paymentData,...order},
                 config
             );
 

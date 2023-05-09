@@ -4,16 +4,38 @@ const ErrorHander = require("../utils/errorhander");
 const catchAsynError = require("../middleware/catchAsynError");
 const ApiFeatures = require("../utils/apifeatures");
 
+
+const GenerrateRandomString = (length) => {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_xXx_Tue_Dep_Trai_Vjp_Pro_xXx_abcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  return result;
+};
+
+
 //admin
 exports.createGuarantee = catchAsynError(async (req, res, next) => {
-  const guarantee = await Guarantee.create({...req.body.guarantee});
+
+  console.log('Guarantee controller')
+  console.log(req.body.order)
+
+  for (let i = 0; i < req.body.order.orderItems.length; i++) {
+      const guarantee = await Guarantee.create({product:req.body.order.orderItems[i]._id,code:GenerrateRandomString(7),user:req.user,description:"Guarantee for "+req.body.order.orderItems[i],expireDate:new Date().getDate()+60});
+// console.log(guarantee)
+  }
+  // const guarantee = await Guarantee.create({...req.body.guarantee});
 
 //   res.status(201).json({
 //     success: true,
 //     guarantee
 //   });
 
-res.guarantee=guarantee;
+// res.guarantee=guarantee;
 next();
 });
 
