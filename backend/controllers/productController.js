@@ -1,15 +1,15 @@
-const Product = require("../models/productModel");
-const ErrorHander = require("../utils/errorhander");
-const catchAsynError = require("../middleware/catchAsynError");
-const ApiFeatures = require("../utils/apifeatures");
+const Product = require('../models/productModel');
+const ErrorHander = require('../utils/errorhander');
+const catchAsynError = require('../middleware/catchAsynError');
+const ApiFeatures = require('../utils/apifeatures');
 
-const cloudinary = require("cloudinary");
+const cloudinary = require('cloudinary');
 
 //admin
 exports.createProduct = catchAsynError(async (req, res, next) => {
   let images = [];
 
-  if (typeof req.body.images === "string") {
+  if (typeof req.body.images === 'string') {
     images.push(req.body.images);
   } else {
     images = req.body.images;
@@ -17,22 +17,22 @@ exports.createProduct = catchAsynError(async (req, res, next) => {
 
   const imagesLinks = [];
 
-  // for (let i = 0; i < images.length; i++) {
-  //   const result = await cloudinary.v2.uploader.upload(images[i], {
-  //     folder: "products",
-  //   });
+  for (let i = 0; i < images.length; i++) {
+    const result = await cloudinary.v2.uploader.upload(images[i], {
+      folder: 'products',
+    });
 
-  //   imagesLinks.push({
-  //     public_id: result.public_id,
-  //     url: result.secure_url,
-  //   });
-  // }
+    imagesLinks.push({
+      public_id: result.public_id,
+      url: result.secure_url,
+    });
+  }
 
   req.body.images = imagesLinks;
   req.body.user = req.user.id;
 
-  const product = await Product.create(req.body.product);
-  req.product=product;
+  const product = await Product.create(req.body);
+  req.product = product;
 
   res.status(201).json({
     success: true,
@@ -42,7 +42,7 @@ exports.createProduct = catchAsynError(async (req, res, next) => {
   // next();
 });
 exports.getAllProducts = catchAsynError(async (req, res) => {
-  console.log("access");
+  console.log('access');
   const resultPerPage = 8;
   const productsCount = await Product.countDocuments();
 
@@ -57,10 +57,9 @@ exports.getAllProducts = catchAsynError(async (req, res) => {
 
   let filteredProductsCount = products.length;
 
-
   // let products = await apiFeature.query;
 
-  // products = await apiFeature.query;
+  products = await apiFeature.query;
 
   console.log(products);
   console.log(productsCount);
@@ -89,11 +88,11 @@ exports.updateProduct = catchAsynError(async (req, res, next) => {
   let product = await Product.findById(req.params.id);
 
   if (!product) {
-    return next(new ErrorHander("Không tìm thấy sản phẩm", 404));
+    return next(new ErrorHander('Không tìm thấy sản phẩm', 404));
   }
   let images = [];
 
-  if (typeof req.body.images === "string") {
+  if (typeof req.body.images === 'string') {
     images.push(req.body.images);
   } else {
     images = req.body.images;
@@ -108,7 +107,7 @@ exports.updateProduct = catchAsynError(async (req, res, next) => {
 
     for (let i = 0; i < images.length; i++) {
       const result = await cloudinary.v2.uploader.upload(images[i], {
-        folder: "products",
+        folder: 'products',
       });
 
       imagesLinks.push({
@@ -136,7 +135,7 @@ exports.updateProduct = catchAsynError(async (req, res, next) => {
 exports.deleteProducts = catchAsynError(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
   if (!product) {
-    return next(new ErrorHander("Không tìm thấy sản phẩm", 404));
+    return next(new ErrorHander('Không tìm thấy sản phẩm', 404));
   }
   for (let i = 0; i < product.images.length; i++) {
     await cloudinary.v2.uploader.destroy(product.images[i].public_id);
@@ -144,13 +143,13 @@ exports.deleteProducts = catchAsynError(async (req, res, next) => {
   await product.remove();
   res.status(200).json({
     success: true,
-    message: "XÓa sản phẩm thành công",
+    message: 'XÓa sản phẩm thành công',
   });
 });
 exports.getProductDetails = catchAsynError(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
   if (!product) {
-    return next(new ErrorHander("Không tìm thấy sản phẩm", 404));
+    return next(new ErrorHander('Không tìm thấy sản phẩm', 404));
   }
   res.status(200).json({
     success: true,
@@ -195,7 +194,7 @@ exports.getProductReviews = catchAsynError(async (req, res, next) => {
   const product = await Product.findById(req.query.id);
 
   if (!product) {
-    return next(new ErrorHander("Không tìm thấy sản phẩm", 404));
+    return next(new ErrorHander('Không tìm thấy sản phẩm', 404));
   }
 
   res.status(200).json({
@@ -206,7 +205,7 @@ exports.getProductReviews = catchAsynError(async (req, res, next) => {
 exports.deleteReview = catchAsynError(async (req, res, next) => {
   const product = await Product.findById(req.query.productId);
   if (!product) {
-    return next(new ErrorHander("Không tìm thấy sản phẩm", 404));
+    return next(new ErrorHander('Không tìm thấy sản phẩm', 404));
   }
   const reviews = product.reviews.filter(
     (rev) => rev._id.toString() !== req.query.id.toString()
