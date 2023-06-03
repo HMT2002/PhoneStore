@@ -50,15 +50,15 @@ exports.getAllProducts = catchAsynError(async (req, res) => {
     .search()
     .filter();
 
-  let products = await apiFeature.query.clone();
+  // const products = await apiFeature.query;
+  apiFeature.pagination(resultPerPage);
 
-  // let products = await Product.find({});
+  let products = await Product.find();
 
   let filteredProductsCount = products.length;
 
-  apiFeature.pagination(resultPerPage);
 
-  // products = await apiFeature.query;
+  // let products = await apiFeature.query;
 
   // products = await apiFeature.query;
 
