@@ -20,12 +20,19 @@ const payment = require("./routers/paymentRoute");
 const voucher = require("./routers/voucherRoute");
 const guarantee = require("./routers/guaranteeRoute");
 
+app.use((req, res, next) => {
+    req.requestTime = new Date().toISOString();
+    console.log(req.requestTime);
+    console.log(req.originalUrl);
+  
+    next();
+  });
 app.use("/api/v1", product);
 app.use("/api/v1", user);
 app.use("/api/v1", order);
 app.use("/api/v1", payment);
-app.use("/api/v1/voucher", voucher);
-app.use("/api/v1/guarantee", guarantee);
+app.use("/api/v1", voucher);
+app.use("/api/v1", guarantee);
 
 //Middleware for Error
 app.use(errorMiddleware);

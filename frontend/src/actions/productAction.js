@@ -29,6 +29,10 @@ import {
   DELETE_REVIEW_SUCCESS,
   DELETE_REVIEW_FAIL,
   CLEAR_ERRORS,
+  NEW_VOUCHER_REQUEST ,
+  NEW_VOUCHER_SUCCESS ,
+  NEW_VOUCHER_RESET,
+  NEW_VOUCHER_FAIL ,
 } from '../constants/productConstants';
 
 export const getProduct =
@@ -74,9 +78,7 @@ export const getProductDetails = (id) => async (dispatch) => {
 export const getAdminProduct = () => async (dispatch) => {
   try {
     dispatch({ type: ADMIN_PRODUCT_REQUEST });
-
     const { data } = await axios.get('/api/v1/admin/products');
-
     dispatch({
       type: ADMIN_PRODUCT_SUCCESS,
       payload: data.products,
@@ -109,6 +111,32 @@ export const createProduct = (productData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: NEW_PRODUCT_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const createVoucher = (voucherData) => async (dispatch) => {
+  try {
+    dispatch({ type: NEW_VOUCHER_REQUEST });
+
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+    };
+
+    const { data } = await axios.post(
+      `/api/v1/admin/voucher/new`,
+      voucherData,
+      config
+    );
+
+    dispatch({
+      type: NEW_VOUCHER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: NEW_VOUCHER_FAIL,
       payload: error.response.data.message,
     });
   }

@@ -13,19 +13,30 @@ const voucherSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "VoucherCategory",
     default: null,
-    required: [true, "Voucher required"],
+    required:false,
   },
 
   voucherStatus: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "VoucherStatus",
     default: null,
-    required: [true, "Voucher required"],
+    required: false,
   },
 
   createDate: { type: Date, default: Date.now(), required: false },
   expireDate: { type: Date, default: null, required: false },
-
+  images: [
+    {
+      public_id: {
+        type: String,
+        required: true,
+      },
+      url: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
   value: { type: Number, default: 0 },
   amount: { type: Number, default: 0 },
   description: {

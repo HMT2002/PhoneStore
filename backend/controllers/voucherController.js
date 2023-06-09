@@ -8,6 +8,7 @@ const ApiFeatures = require("../utils/apifeatures");
 
 //admin
 exports.createVoucher = catchAsynError(async (req, res, next) => {
+  console.log('w');
   const voucher = await Voucher.create({...req.body,user:req.user});
 
   res.status(201).json({

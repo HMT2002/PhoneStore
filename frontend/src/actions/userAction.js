@@ -46,6 +46,7 @@ export const login = (email, password) => async (dispatch) => {
         const config = { headers: { "Content-Type": "application/json" } };
 
         const { data } = await axios.post(`/api/v1/login`, { email, password }, config);
+        localStorage.setItem("Authorization", data.token);
 
         dispatch({ type: LOGIN_SUCCESS, payload: data.user });
     } catch (error) {
@@ -154,6 +155,8 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
 };
 export const getAllUsers = () => async (dispatch) => {
     try {
+        console.log('dsdfwewerf');
+
         dispatch({ type: ALL_USERS_REQUEST });
         const { data } = await axios.get(`/api/v1/admin/users`);
 
