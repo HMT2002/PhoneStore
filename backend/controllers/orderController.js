@@ -1,4 +1,6 @@
 const Order = require("../models/orderModel");
+const Guarantee = require("../models/guaranteeModel");
+
 const Product = require("../models/productModel");
 const ErrorHander = require("../utils/errorhander");
 const catchAsynError = require("../middleware/catchAsynError");
@@ -25,6 +27,7 @@ exports.newOrder = catchAsynError(async (req, res, next) => {
         paidAt: Date.now(),
         user: req.user._id,
     });
+
 
     res.status(201).json({
         success: true,

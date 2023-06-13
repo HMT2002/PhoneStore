@@ -22,11 +22,12 @@ const GenerrateRandomString = (length) => {
 exports.createGuarantee = catchAsynError(async (req, res, next) => {
 
   console.log('Guarantee controller')
-  console.log(req.body.order)
+  const {orderItems} = req.body;
+  console.log(orderItems);
 
-  for (let i = 0; i < req.body.order.orderItems.length; i++) {
-      const guarantee = await Guarantee.create({product:req.body.order.orderItems[i]._id,code:GenerrateRandomString(7),user:req.user,description:"Guarantee for "+req.body.order.orderItems[i],expireDate:new Date().getDate()+60});
-// console.log(guarantee)
+  for (let i = 0; i < orderItems.length; i++) {
+  const guarantee = await Guarantee.create({product:orderItems[i].product,code:GenerrateRandomString(7),user:req.user,description:"Guarantee for "+orderItems[i].product,expireDate:new Date().getDate()+60});
+  console.log(guarantee)
   }
   // const guarantee = await Guarantee.create({...req.body.guarantee});
 

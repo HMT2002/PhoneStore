@@ -44,8 +44,8 @@ function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
   const [stripeApiKey, setStripeApiKey] = useState('');
   async function getStripeApiKey() {
-    // const { data } = await axios.get("/api/v1/stripeapikey");
-    // setStripeApiKey(data.stripeApiKey);
+    const { data } = await axios.get("/api/v1/stripeapikey");
+    setStripeApiKey(data.stripeApiKey);
   }
   React.useEffect(() => {
     WebFont.load({
@@ -82,6 +82,7 @@ function App() {
         <Elements stripe={loadStripe(stripeApiKey)}>
           <ProtectedRoute exact path='/process/payment' component={Payment} />
         </Elements>
+        
       )}
       <ProtectedRoute exact path='/success' component={OrderSuccess} />
       <ProtectedRoute exact path='/orders' component={MyOrders} />

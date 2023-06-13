@@ -15,21 +15,21 @@ router
 router.route("/guarantee/:id").get(guaranteeController.getGuaranteeDetails);
 
 router
-  .route("/admin/guarantee/new")
+  .route("/admin/new")
   .post(
     isAuthenticatedUser,
     authorieRoles("admin"),
     guaranteeController.createGuarantee
   );
 router
-  .route("/admin/guarantee/:id")
+  .route("/admin/:id")
   .put(
     isAuthenticatedUser,
     authorieRoles("admin"),
     guaranteeController.updateGuarantee
   );
 router
-  .route("/admin/guarantee/:id")
+  .route("/admin/:id")
   .delete(
     isAuthenticatedUser,
     authorieRoles("admin"),
