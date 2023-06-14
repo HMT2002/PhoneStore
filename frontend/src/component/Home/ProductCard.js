@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Rating } from "@material-ui/lab";
+import VoucherLabel from './../Voucher/VoucherLabel';
 
 
 const ProductCard = ({ product }) => {
@@ -12,6 +13,7 @@ const ProductCard = ({ product }) => {
     }
     return (
         <Link className="productCard" to={`/product/${product._id}`}>
+            <VoucherLabel></VoucherLabel>
             <img src={product.images[0].url} alt={product.name} />
             <p>{product.name}</p>
             <div>

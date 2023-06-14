@@ -10,6 +10,6 @@ const guaranteeController=require("../controllers/guaranteeController");
 router.route("/payment/process").post(isAuthenticatedUser,guaranteeController.createGuarantee, processPayment);
 
 
-router.route("/stripeapikey").get(isAuthenticatedUser, sendStripeApiKey);
+router.route("/stripeapikey").get( sendStripeApiKey);
 
 module.exports = router;
