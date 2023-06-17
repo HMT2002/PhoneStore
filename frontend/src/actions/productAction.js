@@ -33,6 +33,9 @@ import {
   NEW_VOUCHER_SUCCESS ,
   NEW_VOUCHER_RESET,
   NEW_VOUCHER_FAIL ,
+  PRODUCT_VOUCHER_DETAILS_REQUEST,
+  PRODUCT_VOUCHER_DETAILS_SUCCESS,
+  PRODUCT_VOUCHER_DETAILS_FAIL,
 } from '../constants/productConstants';
 
 export const getProduct =
@@ -73,6 +76,18 @@ export const getProductDetails = (id) => async (dispatch) => {
       type: PRODUCT_DETAILS_FAIL,
       payload: error.response.data.message,
     });
+  }
+};
+
+export const getProductVoucherDetails = async (id) => {
+  console.log('ewqrewrqewrewqrqwrqwerqwr');
+  try {
+    const { data } = await axios.get(`/api/v1/product/${id}/voucher`);
+    console.log(data);
+    return data;
+  } catch (error) {
+console.log(error);
+return error;
   }
 };
 export const getAdminProduct = () => async (dispatch) => {

@@ -14,12 +14,14 @@ const {
 } = require("../controllers/productController");
 
 const guaranteeController=require("../controllers/guaranteeController");
+const voucherController = require("../controllers/voucherController");
 
 router.route("/products").get(getAllProducts);
 router
   .route("/admin/products")
   .get(isAuthenticatedUser, authorieRoles("admin"), getAdminProducts);
 router.route("/product/:id").get(getProductDetails);
+router.route("/product/:id/voucher").get(voucherController.getProductVoucherDetails);
 
 router
   .route("/admin/product/new")

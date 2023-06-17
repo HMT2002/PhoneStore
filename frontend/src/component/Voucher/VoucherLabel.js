@@ -1,13 +1,13 @@
-import React from "react";
 import './VoucherLabel.css';
+import {useSelector, useDispatch} from 'react-redux';
+import React, {Fragment, useEffect, useState} from 'react';
 
-const VoucherLabel = ({ info }) => {
 
+const VoucherLabel = ({ voucher }) => {
 
+    console.log(voucher)
     return (
-        <div className="voucherContainer">
-            <div className="voucherNumberContainer"><span class="voucherNumber">42%</span></div>
-        </div>
+    <div className="voucherNumberContainer">{voucher.value}%</div>
     );
 };
 

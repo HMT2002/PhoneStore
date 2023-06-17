@@ -23,9 +23,13 @@ import {Rating} from '@material-ui/lab';
 import {NEW_REVIEW_RESET} from '../../constants/productConstants';
 import VoucherLabel from './../Voucher/VoucherLabel';
 
+import {
+  getProductVoucherDetails,
+} from '../../actions/productAction';
+
+
 const ProductDetails = ({match}) => {
   const dispatch = useDispatch();
-  const alert = useAlert();
 
   const {product, loading, error} = useSelector(state => state.productDetails);
 
@@ -42,6 +46,22 @@ const ProductDetails = ({match}) => {
   const [open, setOpen] = useState(false);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
+
+  const  [voucher,setVoucher]  = useState({value:0});
+  const  [isVoucher,setIsVoucher]  = useState(false);
+
+  const getVoucherDetail=async()=>{
+    const reqVoucher=await getProductVoucherDetails(match.params.id);
+    console.log(reqVoucher);
+    if(!reqVoucher.voucher){
+      console.log('No voucher');
+      setIsVoucher(false);
+    }
+    else{
+      setVoucher(reqVoucher.voucher);
+      setIsVoucher(true);
+    }
+}
 
   const increaseQuantity = () => {
     if (product.Stock <= quantity) return;
@@ -78,7 +98,7 @@ const ProductDetails = ({match}) => {
     setOpen(false);
   };
 
-  useEffect(() => {
+  useEffect(async() => {
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
@@ -94,6 +114,10 @@ const ProductDetails = ({match}) => {
       dispatch({type: NEW_REVIEW_RESET});
     }
     dispatch(getProductDetails(match.params.id));
+
+
+    await getVoucherDetail();
+
   }, [dispatch, match.params.id, error, alert, reviewError, success]);
 
   return (
@@ -105,7 +129,6 @@ const ProductDetails = ({match}) => {
           <MetaData title={`${product.name} - Mobile Store`} />
           <div className="ProductDetails">
             <div>
-                <VoucherLabel/>
               <Carousel>
                 {product.images &&
                   product.images.map((item, i) => (
@@ -120,7 +143,7 @@ const ProductDetails = ({match}) => {
             </div>
             <div>
               <div className="detailsBlock-1">
-                <div><h2>{product.name}</h2><VoucherLabel/></div>
+                <h2>{product.name}</h2>
                 <p>Sản phẩm # {product._id}</p>
               </div>
               <div className="detailsBlock-2">
@@ -130,8 +153,13 @@ const ProductDetails = ({match}) => {
                   ({product.numOfReviews} Đánh giá)
                 </span>
               </div>
+     
               <div className="detailsBlock-3">
-                    <h1>{`${product.price}$`}</h1>
+                <div className='containerPriceAndVoucher'><h1>{`${product.price}$`}</h1>
+                {isVoucher?(<div className='voucherContainer-ProductDetail'><VoucherLabel voucher={voucher}/></div>):null}
+                </div>
+                    
+
                 <div className="detailsBlock-3-1">
                   <div className="detailsBlock-3-1-1">
                     <button onClick={decreaseQuantity}>-</button>

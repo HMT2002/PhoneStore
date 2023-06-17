@@ -181,6 +181,18 @@ exports.getVoucherDetails = catchAsynError(async (req, res, next) => {
     voucher,
   });
 });
+
+exports.getProductVoucherDetails = catchAsynError(async (req, res, next) => {
+  const voucher = await Voucher.findOne({product:req.params.id});
+  if (!voucher) {
+    return next(new ErrorHander("Không tìm thấy sản phẩm", 404));
+  }
+  res.status(200).json({
+    success: true,
+    voucher,
+  });
+});
+
 exports.createVoucherReview = catchAsynError(async (req, res, next) => {
   const { rating, comment, voucherId } = req.body;
 

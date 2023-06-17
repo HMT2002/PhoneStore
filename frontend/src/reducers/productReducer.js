@@ -32,6 +32,9 @@ import {
     DELETE_REVIEW_FAIL,
     DELETE_REVIEW_RESET,
     CLEAR_ERRORS,
+    PRODUCT_VOUCHER_DETAILS_REQUEST,
+    PRODUCT_VOUCHER_DETAILS_SUCCESS,
+    PRODUCT_VOUCHER_DETAILS_FAIL,
 } from "../constants/productConstants";
 
 export const productsReducer = (state = { products: [] }, action) => {
@@ -131,7 +134,7 @@ export const productDetailsReducer = (state = { product: {} }, action) => {
                 product: action.payload,
 
             };
-        case PRODUCT_DETAILS_FAIL:
+        case PRODUCT_VOUCHER_DETAILS_FAIL:
             return {
                 loading: false,
                 error: action.payload,
@@ -145,6 +148,35 @@ export const productDetailsReducer = (state = { product: {} }, action) => {
             return state;
     }
 };
+export const productVocherDetailsReducer = (state = { voucher: {} }, action) => {
+    switch (action.type) {
+        case  PRODUCT_VOUCHER_DETAILS_REQUEST:
+            return {
+                loading: true,
+                ...state,
+            };
+        case PRODUCT_VOUCHER_DETAILS_SUCCESS:
+            return {
+                loading: false,
+                voucher: action.payload,
+
+            };
+        case PRODUCT_VOUCHER_DETAILS_FAIL:
+            return {
+                loading: false,
+                error: action.payload,
+            };
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null,
+            };
+        default:
+            return state;
+    }
+};
+
+
 export const newProductReducer = (state = { product: {} }, action) => {
     switch (action.type) {
         case NEW_PRODUCT_REQUEST:
