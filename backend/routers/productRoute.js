@@ -20,7 +20,7 @@ router.route("/products").get(getAllProducts);
 router
   .route("/admin/products")
   .get(isAuthenticatedUser, authorieRoles("admin"), getAdminProducts);
-router.route("/product/:id").get(getProductDetails);
+router.route("/product/:id").get(voucherController.getProductVoucherDetails,getProductDetails);
 router.route("/product/:id/voucher").get(voucherController.getProductVoucherDetails);
 
 router

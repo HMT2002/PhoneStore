@@ -5,6 +5,11 @@ const ApiFeatures = require('../utils/apifeatures');
 
 const cloudinary = require('cloudinary');
 
+const Voucher = require("../models/voucherModel");
+const VoucherCategory = require("../models/voucherCategoryModel");
+const VoucherStatus = require("../models/voucherStatusModel");
+
+
 //admin
 exports.createProduct = catchAsynError(async (req, res, next) => {
   let images = [];
@@ -42,20 +47,20 @@ exports.createProduct = catchAsynError(async (req, res, next) => {
   // next();
 });
 exports.getAllProducts = catchAsynError(async (req, res) => {
-  console.log('access');
+  console.log('access123456');
   const resultPerPage = 8;
   const productsCount = await Product.countDocuments();
 
-  const apiFeature = new ApiFeatures(Product.find(), req.query)
+  const apiFeature = new ApiFeatures(Product.find().lean(), req.query)
     .search()
     .filter();
 
   // const products = await apiFeature.query;
   apiFeature.pagination(resultPerPage);
 
-  let products = await Product.find();
+  let products = await Product.find().lean();
 
-  let filteredProductsCount = products.length;
+  let filteredProductsCount = 5;
 
   // let products = await apiFeature.query;
 
@@ -65,6 +70,14 @@ exports.getAllProducts = catchAsynError(async (req, res) => {
   console.log(productsCount);
   console.log(resultPerPage);
   console.log(filteredProductsCount);
+
+  
+  // products.forEach(async (product) => {
+  //   const voucher = await Voucher.findOne({product:product._id})
+  //   if (voucher) {
+  //     product.voucher=voucher;
+  //   }
+  // });
 
   res.status(200).json({
     success: true,
@@ -76,7 +89,16 @@ exports.getAllProducts = catchAsynError(async (req, res) => {
 });
 //admim
 exports.getAdminProducts = catchAsynError(async (req, res, next) => {
-  const products = await Product.find();
+  let products = await Product.find();
+  // products= JSON.parse(JSON.stringify(products));
+  await products.forEach(async (product) => {
+    var voucher = await Voucher.findOne({product:product._id})
+    if (voucher) {
+      product=product.toObject();
+      console.log('voucher exist')
+      product.voucher=voucher;
+    }
+  });
 
   res.status(200).json({
     success: true,
@@ -147,10 +169,18 @@ exports.deleteProducts = catchAsynError(async (req, res, next) => {
   });
 });
 exports.getProductDetails = catchAsynError(async (req, res, next) => {
-  const product = await Product.findById(req.params.id);
+
+  let product = await Product.findById(req.params.id);
+  product=product.toObject();
+
   if (!product) {
     return next(new ErrorHander('Không tìm thấy sản phẩm', 404));
   }
+
+  if(req.voucher){
+    product.voucher=req.voucher;
+  }
+
   res.status(200).json({
     success: true,
     product,

@@ -7,7 +7,7 @@ const VoucherLabel = ({ voucher }) => {
 
     console.log(voucher)
     return (
-    <div className="voucherNumberContainer">{voucher.value}%</div>
+    <div className="voucherNumberContainer">-{voucher.value}%</div>
     );
 };
 

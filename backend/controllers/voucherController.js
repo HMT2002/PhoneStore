@@ -35,7 +35,6 @@ exports.createVoucherStatus = catchAsynError(async (req, res, next) => {
   });
 });
 exports.getAllVouchers = catchAsynError(async (req, res) => {
-  console.log("access");
   const resultPerPage = 8;
   const vouchersCount = await Voucher.countDocuments();
 
@@ -184,13 +183,12 @@ exports.getVoucherDetails = catchAsynError(async (req, res, next) => {
 
 exports.getProductVoucherDetails = catchAsynError(async (req, res, next) => {
   const voucher = await Voucher.findOne({product:req.params.id});
-  if (!voucher) {
-    return next(new ErrorHander("Không tìm thấy sản phẩm", 404));
-  }
-  res.status(200).json({
-    success: true,
-    voucher,
-  });
+  req.voucher=voucher;
+  next();
+  // res.status(200).json({
+  //   success: true,
+  //   voucher,
+  // });
 });
 
 exports.createVoucherReview = catchAsynError(async (req, res, next) => {

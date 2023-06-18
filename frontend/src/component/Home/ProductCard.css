@@ -5,3 +5,13 @@
   border-radius: 50%;
   position: absolute;
 }
+.discountPrice{
+  margin-left: 5px;
+  color: rgba(17, 17, 17, 0.795);
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 1vmax;
+}
+.originalPrice{
+  text-decoration-line: line-through;
+
+}

@@ -38,7 +38,11 @@
   .containerPriceAndVoucher{
     overflow: hidden;
     position: relative;
-    
+  }
+  .containerPriceNoVoucher{
+    overflow: hidden;
+    position: relative;
+    display: flex;
   }
 .CarouselImage {
     width: 20vmax;
@@ -78,12 +82,32 @@
     width: 70%;
 }
 
+.detailsBlock-3>h1 {
+    color: rgba(17, 17, 17, 0.795);
+    font: 400 1.8vmax "Franklin Gothic Medium";
+    margin: 1vmax 0;
+    float: left;
+}
+
+.detailsBlock-3>.containerPriceNoVoucher>h1 {
+    color: rgba(17, 17, 17, 0.795);
+    font: 400 1.8vmax "Franklin Gothic Medium";
+    margin: 1vmax 0;
+    float: left;
+    margin-left: 1vmax;
+
+}
+  .originalPrice{
+    text-decoration-line: line-through;
+  
+  }
+
 .detailsBlock-3>.containerPriceAndVoucher>h1 {
     color: rgba(17, 17, 17, 0.795);
     font: 400 1.8vmax "Franklin Gothic Medium";
     margin: 1vmax 0;
     float: left;
-    text-decoration-line: line-through;
+    margin-left: 1vmax;
 }
 
 .detailsBlock-3-1 {
@@ -107,12 +131,15 @@
 .detailsBlock-3-1-1>input {
     border: none;
     padding: 0.5vmax;
-    width: 1vmax;
+    width: 3vmax;
     text-align: center;
     outline: none;
     font: 400 0.8vmax "Roboto";
     color: rgba(0, 0, 0, 0.616);
+    font-weight: bold;
 }
+
+
 
 .detailsBlock-3-1>button:last-child {
     border: none;

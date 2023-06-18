@@ -13,13 +13,11 @@ const ProductCard = ({product}) => {
   const [isVoucher, setIsVoucher] = useState(false);
 
   const getVoucherDetail = async () => {
-    const reqVoucher = await getProductVoucherDetails(product._id);
-    console.log(reqVoucher);
-    if (!reqVoucher.voucher) {
+    if (!product.voucher) {
       console.log('No Voucher');
       setIsVoucher(false);
     } else {
-      setVoucher(reqVoucher.voucher);
+      setVoucher(product.voucher);
       setIsVoucher(true);
     }
   };
@@ -38,7 +36,7 @@ const ProductCard = ({product}) => {
   return (
     <Link className="productCard" to={`/product/${product._id}`}>
         {isVoucher?(<div className="voucherContainer-ProducCard">
-        <VoucherLabel voucher={voucher} />
+        <VoucherLabel voucher={product.voucher} />
       </div>):null}
 
       <img src={product.images[0].url} alt={product.name} />
@@ -49,7 +47,14 @@ const ProductCard = ({product}) => {
           ({product.numOfReviews} Bình luận)
         </span>
       </div>
-      <span>{`${product.price} $`}</span>
+      {isVoucher?(
+        <div>
+          <span className='originalPrice'>{`${product.price} $`}</span>
+          <span className='discountPrice'>{`${(product.price*1)*(1-(product.voucher.value*1/100))} $`}</span>
+        </div>
+
+
+      ):(<span>{`${product.price} $`}</span>)}
     </Link>
   );
 };
