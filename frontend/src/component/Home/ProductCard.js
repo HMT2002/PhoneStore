@@ -13,7 +13,7 @@ const ProductCard = ({product}) => {
   const [isVoucher, setIsVoucher] = useState(false);
 
   const getVoucherDetail = async () => {
-    if (!product.voucher) {
+    if (product.voucher.value*1===0) {
       console.log('No Voucher');
       setIsVoucher(false);
     } else {

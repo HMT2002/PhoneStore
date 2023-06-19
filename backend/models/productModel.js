@@ -72,6 +72,11 @@ const productSchema = mongoose.Schema({
     ref: "UserMaintaince",
     required: true,
   },
+  voucher: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Voucher",
+    required: false,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

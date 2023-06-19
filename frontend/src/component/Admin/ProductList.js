@@ -36,6 +36,8 @@ const ProductList = ({history}) => {
   const [endDate, setEndDate] = useState(new Date());
   const [images, setImages] = useState([]);
   const [discountProduct, setDiscountProduct] = useState('');
+  const [voucherID, setVoucherID] = useState('');
+
   const [code, setCode] = useState('');
   const [value, setValue] = useState('');
   const [amount, setAmount] = useState('');
@@ -49,18 +51,32 @@ const ProductList = ({history}) => {
   const deleteProductHandler = id => {
     dispatch(deleteProduct(id));
   };
-  const addDiscountProductHandler = id => {
+  const addDiscountProductHandler =async id => {
     console.log(id);
+
+    const reqVoucher=await fetch('/api/v1/product/'+id);
+    const data=await reqVoucher.json();
+    console.log(data.product.voucher)
+    if (!data.product.voucher) {
+      console.log('No voucher');
+    } else {
+      setStartDate(data.product.voucher.createDate);
+      setEndDate(data.product.voucher.expireDate);
+      setDescription(data.product.voucher.description);
+      setAmount(data.product.voucher.amount);
+      setValue(data.product.voucher.value);
+      setVoucherID(data.product.voucher._id);
+    }
+
     setDiscountProduct(id);
   };
 
   const createProductVoucherSubmitHandler = e => {
     e.preventDefault();
-    console.log('h');
     console.log(discountProduct);
     const myForm = new FormData();
-
-    myForm.set('code', code);
+    myForm.set('id',voucherID);
+    //myForm.set('code', code);
     myForm.set('expireDate', endDate);
     myForm.set('value', value);
     myForm.set('amount', amount);
@@ -71,7 +87,7 @@ const ProductList = ({history}) => {
     //     myForm.append("images", image);
     // });
 
-    dispatch(createVoucher(myForm));
+    dispatch(createVoucher(myForm,voucherID));
   };
 
   const showDiscountModal = id => {
@@ -221,13 +237,13 @@ const ProductList = ({history}) => {
 
                     <div>
                       <SpellcheckIcon />
-                      <input
+                      {/* <input
                         type="text"
                         placeholder="Mã giảm giá"
                         required
                         value={code}
                         onChange={e => setCode(e.target.value)}
-                      />
+                      /> */}
                     </div>
                     <div>
                       <AttachMoneyIcon />

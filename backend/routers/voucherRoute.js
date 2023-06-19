@@ -15,6 +15,28 @@ router
 router.route("/voucher/:id").get(voucherController.getVoucherDetails);
 
 router
+  .route("/admin/voucher/new")
+  .post(
+    isAuthenticatedUser,
+    authorieRoles("admin"),
+    voucherController.createVoucher
+  );
+router
+  .route("/admin/voucher/:id")
+  .put(
+    isAuthenticatedUser,
+    authorieRoles("admin"),
+    voucherController.updateVoucher
+  );
+router
+  .route("/admin/voucher/:id")
+  .delete(
+    isAuthenticatedUser,
+    authorieRoles("admin"),
+    voucherController.deleteVouchers
+  );
+
+router
   .route("/admin/voucherCategory/new")
   .post(
     isAuthenticatedUser,
@@ -58,26 +80,5 @@ router
     voucherController.deleteVouchersStatus
   );
 
-router
-  .route("/admin/voucher/new")
-  .post(
-    isAuthenticatedUser,
-    authorieRoles("admin"),
-    voucherController.createVoucher
-  );
-router
-  .route("/admin/voucher/:id")
-  .put(
-    isAuthenticatedUser,
-    authorieRoles("admin"),
-    voucherController.updateVoucher
-  );
-router
-  .route("/admin/voucher/:id")
-  .delete(
-    isAuthenticatedUser,
-    authorieRoles("admin"),
-    voucherController.deleteVouchers
-  );
 
 module.exports = router;

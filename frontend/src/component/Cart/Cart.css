@@ -80,11 +80,12 @@
 .cartInput>input {
     border: none;
     padding: 0.5vmax;
-    width: 1vmax;
+    width: 3vmax;
     text-align: center;
     outline: none;
     font: 400 0.8vmax "Roboto";
     color: rgba(0, 0, 0, 0.74);
+    font-weight: bold;
 }
 
 .cartSubtotal {
@@ -157,7 +158,7 @@
     }
 
     .cartInput>input {
-        width: 2vmax;
+        width: 5vmax;
         padding: 1.5vmax;
         font: 400 1.8vmax "Roboto";
     }

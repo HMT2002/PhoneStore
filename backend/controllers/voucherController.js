@@ -6,15 +6,24 @@ const ErrorHander = require("../utils/errorhander");
 const catchAsynError = require("../middleware/catchAsynError");
 const ApiFeatures = require("../utils/apifeatures");
 
-//admin
-exports.createVoucher = catchAsynError(async (req, res, next) => {
-  console.log('w');
-  const voucher = await Voucher.create({...req.body,user:req.user});
 
-  res.status(201).json({
-    success: true,
-    voucher,
-  });
+const GenerrateRandomString = (length) => {
+  let result = '';
+  const characters = '06567898179782978354678978485466855697546289786132546748979464+89';
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  return result;
+};
+
+exports.createVoucher = catchAsynError(async (req, res, next) => {
+
+  const voucher = await Voucher.create({code:GenerrateRandomString(8),user:req.user});
+  req.voucher=voucher;
+  next();
 });
 
 exports.createVoucherCategory = catchAsynError(async (req, res, next) => {
@@ -76,6 +85,7 @@ exports.getAdminVouchers = catchAsynError(async (req, res, next) => {
 exports.updateVoucher = catchAsynError(async (req, res, next) => {
   let voucher = await Voucher.findById(req.params.id);
 
+  console.log('aweeweewewewewewewewewewewe');
   if (!voucher) {
     return next(new ErrorHander("Không tìm thấy giảm giá", 404));
   }

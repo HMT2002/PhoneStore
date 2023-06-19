@@ -25,7 +25,7 @@ router.route("/product/:id/voucher").get(voucherController.getProductVoucherDeta
 
 router
   .route("/admin/product/new")
-  .post(isAuthenticatedUser, authorieRoles("admin"), createProduct);
+  .post(isAuthenticatedUser, authorieRoles("admin"),voucherController.createVoucher, createProduct);
 router
   .route("/admin/product/:id")
   .put(isAuthenticatedUser, authorieRoles("admin"), updateProduct);

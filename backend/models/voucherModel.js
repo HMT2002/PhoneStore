@@ -25,18 +25,6 @@ const voucherSchema = new mongoose.Schema({
 
   createDate: { type: Date, default: Date.now(), required: false },
   expireDate: { type: Date, default: null, required: false },
-  images: [
-    {
-      public_id: {
-        type: String,
-        required: true,
-      },
-      url: {
-        type: String,
-        required: true,
-      },
-    },
-  ],
   value: { type: Number, default: 0 },
   amount: { type: Number, default: 0 },
   description: {
@@ -44,12 +32,7 @@ const voucherSchema = new mongoose.Schema({
     required: false,
     default: "There is no description",
   },
-  product: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Product",
-    default: null,
-    required: [true, "Voucher required product"],
-  },
+
   user: {
     type: mongoose.Schema.ObjectId,
     ref: "UserMaintaince",

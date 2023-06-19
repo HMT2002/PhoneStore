@@ -132,7 +132,7 @@ export const createProduct = (productData) => async (dispatch) => {
   }
 };
 
-export const createVoucher = (voucherData) => async (dispatch) => {
+export const createVoucher = (voucherData,id) => async (dispatch) => {
   try {
     dispatch({ type: NEW_VOUCHER_REQUEST });
 
@@ -140,8 +140,9 @@ export const createVoucher = (voucherData) => async (dispatch) => {
       headers: { 'Content-Type': 'application/json' },
     };
 
-    const { data } = await axios.post(
-      `/api/v1/admin/voucher/new`,
+    console.log(id)
+    const { data } = await axios.put(
+      '/api/v1/admin/voucher/'+id,
       voucherData,
       config
     );

@@ -35,6 +35,7 @@ exports.createProduct = catchAsynError(async (req, res, next) => {
 
   req.body.images = imagesLinks;
   req.body.user = req.user.id;
+  req.body.voucher=req.voucher;
 
   const product = await Product.create(req.body);
   req.product=product;
@@ -51,31 +52,33 @@ exports.getAllProducts = catchAsynError(async (req, res) => {
   const resultPerPage = 8;
   const productsCount = await Product.countDocuments();
 
-  const apiFeature = new ApiFeatures(Product.find().lean(), req.query)
+  const apiFeature = new ApiFeatures(Product.find().populate('voucher'), req.query)
     .search()
     .filter();
 
   // const products = await apiFeature.query;
   apiFeature.pagination(resultPerPage);
 
-  let products = await Product.find().lean();
+  let products = await Product.find().populate('voucher');
 
   let filteredProductsCount = 5;
 
   // let products = await apiFeature.query;
 
-  products = await apiFeature.query;
+  //products = await apiFeature.query;
 
-  console.log(products);
-  console.log(productsCount);
-  console.log(resultPerPage);
-  console.log(filteredProductsCount);
+  // console.log(products);
+  // console.log(productsCount);
+  // console.log(resultPerPage);
+  // console.log(filteredProductsCount);
 
-  
+
   // products.forEach(async (product) => {
   //   const voucher = await Voucher.findOne({product:product._id})
   //   if (voucher) {
   //     product.voucher=voucher;
+  //     console.log('ad');
+  //     console.log(product.voucher);
   //   }
   // });
 
@@ -89,16 +92,8 @@ exports.getAllProducts = catchAsynError(async (req, res) => {
 });
 //admim
 exports.getAdminProducts = catchAsynError(async (req, res, next) => {
-  let products = await Product.find();
+  let products = await Product.find().populate('voucher');
   // products= JSON.parse(JSON.stringify(products));
-  await products.forEach(async (product) => {
-    var voucher = await Voucher.findOne({product:product._id})
-    if (voucher) {
-      product=product.toObject();
-      console.log('voucher exist')
-      product.voucher=voucher;
-    }
-  });
 
   res.status(200).json({
     success: true,
@@ -170,15 +165,10 @@ exports.deleteProducts = catchAsynError(async (req, res, next) => {
 });
 exports.getProductDetails = catchAsynError(async (req, res, next) => {
 
-  let product = await Product.findById(req.params.id);
-  product=product.toObject();
+  let product = await Product.findById(req.params.id).populate('voucher');
 
   if (!product) {
     return next(new ErrorHander('Không tìm thấy sản phẩm', 404));
-  }
-
-  if(req.voucher){
-    product.voucher=req.voucher;
   }
 
   res.status(200).json({

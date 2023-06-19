@@ -49,11 +49,14 @@ const ProductDetails = ({match}) => {
   const [isVoucher, setIsVoucher] = useState(false);
 
   const getVoucherDetail = async () => {
-    if (!product.voucher) {
+    const reqVoucher=await fetch('/api/v1/product/'+match.params.id);
+    const data=await reqVoucher.json();
+    console.log(data)
+    if (data.product.voucher.value*1===0) {
       console.log('No voucher');
       setIsVoucher(false);
     } else {
-      setVoucher(product.voucher);
+      setVoucher(data.product.voucher);
       setIsVoucher(true);
     }
   };
@@ -73,7 +76,7 @@ const ProductDetails = ({match}) => {
   };
 
   const addToCartHandler = () => {
-    dispatch(addItemsToCart(match.params.id, quantity));
+    dispatch(addItemsToCart(match.params.id, quantity,voucher));
     alert.success('Đã thêm vào giỏ hàng');
   };
 
@@ -150,10 +153,10 @@ const ProductDetails = ({match}) => {
               <div className="detailsBlock-3">
                 {isVoucher ? (
                   <div className="containerPriceAndVoucher">
-                    <h1 className='originalPrice'>{`${product.price}$`}</h1><h1>{`${(product.price*1)*(1-(product.voucher.value*1/100))}$`}</h1>
+                    <h1 className='originalPrice'>{`${product.price}$`}</h1><h1>{`${(product.price*1)*(1-(voucher.value*1/100))}$`}</h1>
 
                     <div className="voucherContainer-ProductDetail">
-                      <VoucherLabel voucher={product.voucher} />
+                      <VoucherLabel voucher={voucher} />
                     </div>
                   </div>
                 ) : (
