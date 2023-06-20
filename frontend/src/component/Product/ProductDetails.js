@@ -153,7 +153,7 @@ const ProductDetails = ({match}) => {
               <div className="detailsBlock-3">
                 {isVoucher ? (
                   <div className="containerPriceAndVoucher">
-                    <h1 className='originalPrice'>{`${product.price}$`}</h1><h1>{`${(product.price*1)*(1-(voucher.value*1/100))}$`}</h1>
+                    <h1 className='originalPrice'>{`${product.price}$`}</h1><h1>{`${Math.round((product.price*1)*(1-(voucher.value*1/100))) }$`}</h1>
 
                     <div className="voucherContainer-ProductDetail">
                       <VoucherLabel voucher={voucher} />

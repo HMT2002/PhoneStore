@@ -7,6 +7,7 @@ import {
   getAdminProduct,
   deleteProduct,
   createVoucher,
+  deleteVoucher,
 } from '../../actions/productAction';
 import {Link} from 'react-router-dom';
 import {useAlert} from 'react-alert';
@@ -18,7 +19,8 @@ import Label from '@material-ui/icons/Label';
 import DescriptionIcon from '@material-ui/icons/Description';
 import SpellcheckIcon from '@material-ui/icons/Spellcheck';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
-
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import AddBoxIcon from '@material-ui/icons/AddBox';
 // import { DatePicker ,MuiPickersUtilsProvider } from '@material-ui/pickers';
 // import DateFnsUtils from '@date-io/date-fns';
 
@@ -51,47 +53,49 @@ const ProductList = ({history}) => {
   const deleteProductHandler = id => {
     dispatch(deleteProduct(id));
   };
-  const addDiscountProductHandler =async id => {
-    console.log(id);
-
-    const reqVoucher=await fetch('/api/v1/product/'+id);
-    const data=await reqVoucher.json();
-    console.log(data.product.voucher)
-    if (!data.product.voucher) {
-      console.log('No voucher');
-    } else {
-      setStartDate(data.product.voucher.createDate);
-      setEndDate(data.product.voucher.expireDate);
-      setDescription(data.product.voucher.description);
-      setAmount(data.product.voucher.amount);
-      setValue(data.product.voucher.value);
-      setVoucherID(data.product.voucher._id);
-    }
-
-    setDiscountProduct(id);
-  };
 
   const createProductVoucherSubmitHandler = e => {
     e.preventDefault();
     console.log(discountProduct);
-    const myForm = new FormData();
-    myForm.set('id',voucherID);
-    //myForm.set('code', code);
-    myForm.set('expireDate', endDate);
-    myForm.set('value', value);
-    myForm.set('amount', amount);
-    myForm.set('product', discountProduct);
-    myForm.set('description', description);
+    // const myForm = new FormData();
+    // myForm.set('id', voucherID);
+    // //myForm.set('code', code);
+    // myForm.set('expireDate', endDate);
+    // myForm.set('value', value);
+    // myForm.set('amount', 0);
+    // myForm.set('product', discountProduct);
+    // myForm.set('description', description);
 
-    // images.forEach((image) => {
-    //     myForm.append("images", image);
-    // });
+    const voucherData = {
+      expireDate: endDate,
+      value: value,
+      amount: 0,
+      product: discountProduct,
+      description: description,
+    };
 
-    dispatch(createVoucher(myForm,voucherID));
+    dispatch(createVoucher(voucherData, voucherID));
+
+    history.push('/admin/dashboard');
   };
 
   const showDiscountModal = id => {
-    addDiscountProductHandler(id);
+    console.log(id);
+    setDiscountProduct(id);
+  };
+
+  const removeDiscount = id => {
+
+
+    const voucherData = {
+      expireDate: new Date(),
+      value: 0,
+      amount: 0,
+      description: 'There is no description',
+    };
+
+    dispatch(createVoucher(voucherData, id));
+    history.push('/admin/dashboard');
   };
 
   useEffect(() => {
@@ -140,6 +144,41 @@ const ProductList = ({history}) => {
     },
 
     {
+      field: 'voucher',
+      headerName: 'Giảm giá',
+      type: 'number',
+      minWidth: 270,
+      flex: 0.5,
+      renderCell: params => {
+        return (
+          <Fragment>
+            {params.row.voucher.value * 1 > 0 ? (
+              <Fragment>
+                <div>{params.row.voucher.value}</div>
+                <Button
+                  onClick={() => {
+                    removeDiscount(params.row.voucher._id);
+                  }}>
+                  <HighlightOffIcon />
+                </Button>
+              </Fragment>
+            ) : (
+              <Button
+                onClick={() => {
+                  console.log(params.row.voucher);
+                  setVoucherID(params.row.voucher._id)
+                  showDiscountModal(params.getValue(params.id, 'id'));
+                  setShowModal(true);
+                }}>
+                <AddBoxIcon />
+              </Button>
+            )}
+          </Fragment>
+        );
+      },
+    },
+
+    {
       field: 'actions',
       flex: 0.3,
       headerName: 'Chỉnh sửa',
@@ -158,13 +197,6 @@ const ProductList = ({history}) => {
               }>
               <DeleteIcon />
             </Button>
-            <Button
-              onClick={() => {
-                showDiscountModal(params.getValue(params.id, 'id'));
-                setShowModal(true);
-              }}>
-              <Label />
-            </Button>
           </Fragment>
         );
       },
@@ -180,23 +212,9 @@ const ProductList = ({history}) => {
         stock: item.Stock,
         price: item.price,
         name: item.name,
+        voucher: item.voucher,
       });
     });
-
-  const createVoucherImagesChange = e => {
-    const files = Array.from(e.target.files);
-    setImages([]);
-    files.forEach(file => {
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setImages(old => [...old, reader.result]);
-        }
-      };
-      reader.readAsDataURL(file);
-    });
-  };
 
   return (
     <Fragment>
@@ -236,16 +254,6 @@ const ProductList = ({history}) => {
                     <h1>Thông tin voucher</h1>
 
                     <div>
-                      <SpellcheckIcon />
-                      {/* <input
-                        type="text"
-                        placeholder="Mã giảm giá"
-                        required
-                        value={code}
-                        onChange={e => setCode(e.target.value)}
-                      /> */}
-                    </div>
-                    <div>
                       <AttachMoneyIcon />
                       <input
                         type="number"
@@ -255,7 +263,7 @@ const ProductList = ({history}) => {
                         onChange={e => setValue(e.target.value)}
                       />
                     </div>
-                    <div>
+                    {/* <div>
                       <AttachMoneyIcon />
                       <input
                         type="number"
@@ -264,7 +272,7 @@ const ProductList = ({history}) => {
                         value={amount}
                         onChange={e => setAmount(e.target.value)}
                       />
-                    </div>
+                    </div> */}
                     <div>
                       <DescriptionIcon />
 
@@ -277,36 +285,11 @@ const ProductList = ({history}) => {
                           setDescription(e.target.value)
                         }></textarea>
                     </div>
-
-                    {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
-    <div>
-
-                            <DatePicker label="Start Date"
-        inputVariant="outlined"
-        value={startDate}  onChange={(date) => setStartDate(date)} />
-
-</div>
-<div>
-                                <DatePicker label="End Date"
-        inputVariant="outlined"
-        value={endDate} onChange={(date) => setEndDate(date)} />
-</div>
-
-</MuiPickersUtilsProvider> */}
-
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DemoContainer components={['DatePicker']}>
-                        {/* <div>
-
-<DatePicker label="Start Date"
-inputVariant="outlined"
-  onChange={(date) => {
-    setStartDate(date)}} />
-
-</div> */}
                         <div>
                           <DatePicker
-                            label="End Date"
+                            label="Ngày hết hạn"
                             inputVariant="outlined"
                             onChange={date => setEndDate(date)}
                           />

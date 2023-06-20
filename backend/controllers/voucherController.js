@@ -83,14 +83,15 @@ exports.getAdminVouchers = catchAsynError(async (req, res, next) => {
 });
 //admin
 exports.updateVoucher = catchAsynError(async (req, res, next) => {
+    console.log('aweeweewewewewewewewewewewe');
+
   let voucher = await Voucher.findById(req.params.id);
 
-  console.log('aweeweewewewewewewewewewewe');
   if (!voucher) {
     return next(new ErrorHander("Không tìm thấy giảm giá", 404));
   }
 
-  voucher = await Voucher.findByIdAndUpdate(req.params.id, req.body, {
+  voucher = await Voucher.findByIdAndUpdate(req.params.id, {value:req.body.value,expireDate:req.body.expireDate,amount:req.body.amount,description:req.body.description}, {
     new: true,
     runValidators: true,
     useFindAndModify: false,

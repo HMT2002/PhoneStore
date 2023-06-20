@@ -36,6 +36,10 @@ import {
   PRODUCT_VOUCHER_DETAILS_REQUEST,
   PRODUCT_VOUCHER_DETAILS_SUCCESS,
   PRODUCT_VOUCHER_DETAILS_FAIL,
+  DELETE_VOUCHER_REQUEST ,
+  DELETE_VOUCHER_SUCCESS ,
+  DELETE_VOUCHER_RESET,
+  DELETE_VOUCHER_FAIL,
 } from '../constants/productConstants';
 
 export const getProduct =
@@ -136,11 +140,13 @@ export const createVoucher = (voucherData,id) => async (dispatch) => {
   try {
     dispatch({ type: NEW_VOUCHER_REQUEST });
 
+
     const config = {
       headers: { 'Content-Type': 'application/json' },
     };
-
     console.log(id)
+    console.log(voucherData)
+
     const { data } = await axios.put(
       '/api/v1/admin/voucher/'+id,
       voucherData,
@@ -158,6 +164,33 @@ export const createVoucher = (voucherData,id) => async (dispatch) => {
     });
   }
 };
+
+export const deleteVoucher = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_VOUCHER_REQUEST });
+
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+    };
+
+    const { data } = await axios.delete(
+      '/api/v1/admin/voucher/'+id,
+      config
+    );
+
+    dispatch({
+      type: DELETE_VOUCHER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_VOUCHER_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+
 export const newReview = (reviewData) => async (dispatch) => {
   try {
     dispatch({ type: NEW_REVIEW_REQUEST });
