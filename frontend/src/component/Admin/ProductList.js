@@ -124,7 +124,7 @@ const ProductList = ({history}) => {
     {
       field: 'name',
       headerName: 'Tên sản phẩm',
-      minWidth: 350,
+      minWidth: 300,
       flex: 1,
     },
     {
@@ -210,7 +210,7 @@ const ProductList = ({history}) => {
       rows.push({
         id: item._id,
         stock: item.Stock,
-        price: item.price,
+        price: Math.round(item.price),
         name: item.name,
         voucher: item.voucher,
       });

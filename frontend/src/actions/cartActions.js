@@ -14,7 +14,7 @@ export const addItemsToCart = (id, quantity,voucher) => async (dispatch, getStat
         payload: {
             product: data.product._id,
             name: data.product.name,
-            price: data.product.price *(1-(voucher.value/100)),
+            price: data.product.price *(1-(data.product.voucher.value/100)),
             image: data.product.images[0].url,
             stock: data.product.Stock,
             quantity,

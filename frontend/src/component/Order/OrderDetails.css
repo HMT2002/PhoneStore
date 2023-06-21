@@ -60,7 +60,7 @@
 
 .orderDetailsCartItemsContainer>div>a {
     color: #575757;
-    margin: 0 2vmax;
+    margin: 0 1.5vmax;
     width: 60%;
     text-decoration: none;
 }
@@ -68,6 +68,11 @@
 .orderDetailsCartItemsContainer>div>span {
     font: 100 1vmax "Roboto";
     color: #5e5e5e;
+}
+
+.orderDetailsCartItemsContainer>div>Button {
+    color: #5e5e5e;
+    margin: 1vmax;
 }
 
 @media screen and (max-width: 600px) {

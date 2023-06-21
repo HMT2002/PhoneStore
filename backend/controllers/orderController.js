@@ -35,9 +35,13 @@ exports.newOrder = catchAsynError(async (req, res, next) => {
     });
 });
 exports.getSingleOrder = catchAsynError(async (req, res, next) => {
+    console.log('werqwrqrqerettrtrfvdffaddfdvd');
     const order = await Order.findById(req.params.id).populate(
         "user",
         "name email"
+    ).populate(
+        'orderItems.guaranteen',
+        'code createDate description'
     );
     if (!order) {
         return next(new ErrorHander("ID đơn hàng không hợp lệ", 404));

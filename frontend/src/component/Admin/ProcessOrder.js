@@ -137,8 +137,8 @@ const ProcessOrder = ({ history, match }) => {
                                                         {item.name}
                                                     </Link>{" "}
                                                     <span>
-                                                        {item.quantity} x {item.price}$ ={" "}
-                                                        <b>{item.price * item.quantity}$</b>
+                                                        {item.quantity} x {Math.round(item.price)}$ ={" "}
+                                                        <b>{Math.round(item.price) * item.quantity}$</b>
                                                     </span>
                                                 </div>
                                             ))}

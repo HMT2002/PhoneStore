@@ -68,7 +68,7 @@ const MyOrders = () => {
                 itemsQty: item.orderItems.length,
                 id: item._id,
                 status: item.orderStatus,
-                amount: item.totalPrice,
+                amount:Math.round( item.totalPrice),
             });
         });
 

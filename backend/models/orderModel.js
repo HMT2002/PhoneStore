@@ -52,6 +52,11 @@ const orderSchema = new mongoose.Schema({
         ref: "Product",
         required: true,
       },
+      guaranteen:{
+        type: mongoose.Schema.ObjectId,
+        ref: "Guaranteen",
+        required: true,
+      }
     },
   ],
   user: {

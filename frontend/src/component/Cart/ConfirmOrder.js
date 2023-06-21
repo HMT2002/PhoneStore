@@ -11,7 +11,7 @@ const ConfirmOrder = ({ history }) => {
     const { user } = useSelector((state) => state.user);
 
     const subtotal = cartItems.reduce(
-        (acc, item) => acc + item.quantity * item.price,
+        (acc, item) => acc + item.quantity * Math.round(item.price),
         0
     );
 
@@ -70,8 +70,8 @@ const ConfirmOrder = ({ history }) => {
                                             {item.name}
                                         </Link>{" "}
                                         <span>
-                                            {item.quantity} x {item.price}$ ={" "}
-                                            <b>{item.price * item.quantity}$</b>
+                                            { item.quantity} x {Math.round(item.price)}$ ={" "}
+                                            <b>{Math.round(item.price)  * item.quantity}$</b>
                                         </span>
                                     </div>
                                 ))}
@@ -85,15 +85,15 @@ const ConfirmOrder = ({ history }) => {
                         <div>
                             <div>
                                 <p>Tổng tiền:</p>
-                                <span>{subtotal}$</span>
+                                <span>{Math.round(subtotal) }$</span>
                             </div>
                             <div>
                                 <p>Phí vận chuyển:</p>
-                                <span>{shippingCharges}$</span>
+                                <span>{Math.round(shippingCharges)}$</span>
                             </div>
                             <div>
                                 <p>Thuế GTA:</p>
-                                <span>{tax}$</span>
+                                <span>{Math.round(tax)}$</span>
                             </div>
                         </div>
 
@@ -101,7 +101,7 @@ const ConfirmOrder = ({ history }) => {
                             <p>
                                 <b>Tổng:</b>
                             </p>
-                            <span>{totalPrice}$</span>
+                            <span>{Math.round(totalPrice)}$</span>
                         </div>
 
                         <button onClick={proceedToPayment}>Chấp nhận thanh toán</button>

@@ -26,17 +26,12 @@ exports.createGuarantee = catchAsynError(async (req, res, next) => {
   console.log(orderItems);
 
   for (let i = 0; i < orderItems.length; i++) {
-  const guarantee = await Guarantee.create({product:orderItems[i].product,code:GenerrateRandomString(7),user:req.user,description:"Guarantee for "+orderItems[i].product,expireDate:new Date().getDate()+60});
-  console.log(guarantee)
+    const code=GenerrateRandomString(7);
+    const guaranteen = await Guarantee.create({product:orderItems[i].product,code:code,user:req.user,description:"Mã bảo hành sản phẩm là "+code,expireDate:new Date().getDate()+60});
+    orderItems[i].guaranteen=guaranteen;
+    console.log(guaranteen)
   }
-  // const guarantee = await Guarantee.create({...req.body.guarantee});
 
-//   res.status(201).json({
-//     success: true,
-//     guarantee
-//   });
-
-// res.guarantee=guarantee;
 next();
 });
 
