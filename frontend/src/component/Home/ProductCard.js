@@ -49,8 +49,8 @@ const ProductCard = ({product}) => {
       </div>
       {isVoucher?(
         <div>
-          <span className='originalPrice'>{`${product.price} $`}</span>
-          <span className='discountPrice'>{`${Math.round( (product.price*1)*(1-(product.voucher.value*1/100)))} $`}</span>
+          <span className='originalPrice'>{`${Math.round((product.price*1))} $`}</span>
+          <span className='discountPrice'>{`${Math.round( (product.voucherPrice*1))} $`}</span>
         </div>
 
 

@@ -56,14 +56,14 @@ exports.getAllProducts = catchAsynError(async (req, res) => {
     .search()
     .filter();
 
-  // const products = await apiFeature.query;
+  const products = await apiFeature.query;
   apiFeature.pagination(resultPerPage);
 
-  let products = await Product.find().populate('voucher');
+  //let products = await Product.find().populate('voucher');
 
   let filteredProductsCount = 5;
 
-  // let products = await apiFeature.query;
+  //let products = await apiFeature.query;
 
   //products = await apiFeature.query;
 

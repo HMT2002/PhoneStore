@@ -42,35 +42,38 @@ import {
   DELETE_VOUCHER_FAIL,
 } from '../constants/productConstants';
 
-export const getProduct =
-  (keyword = '', currentPage = 1, price = [0, 25000], category) =>
-  async (dispatch) => {
-    try {
+export const getProduct = (keyword = "", currentPage = 1, price = [0, 25000], category) => async (dispatch) => {
+  try {
       dispatch({ type: ALL_PRODUCT_REQUEST });
 
-      let link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}`;
+      let link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}`;;
       if (category) {
-        link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}`;
+          link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}`;
       }
       const { data } = await axios.get(link);
 
-      console.log(data);
+      console.log(data)
+      data.products.map(product=>{
+        product.voucherPrice=Math.round( (product.price*1)*(1-(product.voucher.value*1/100)))
+      })
       dispatch({
-        type: ALL_PRODUCT_SUCCESS,
-        payload: data,
+          type: ALL_PRODUCT_SUCCESS,
+          payload: data,
       });
-    } catch (error) {
+  } catch (error) {
       dispatch({
-        type: ALL_PRODUCT_FAIL,
-        payload: error.response.data.message,
+          type: ALL_PRODUCT_FAIL,
+          payload: error.response.data.message,
       });
-    }
-  };
+  }
+};
 export const getProductDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST });
 
-    const { data } = await axios.get(`/api/v1/product/${id}`);
+    var { data } = await axios.get(`/api/v1/product/${id}`);
+
+    data.product.voucherPrice=Math.round( (data.product.price*1)*(1-(data.product.voucher.value*1/100)))
 
     dispatch({
       type: PRODUCT_DETAILS_SUCCESS,
