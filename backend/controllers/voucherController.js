@@ -5,6 +5,7 @@ const VoucherStatus = require("../models/voucherStatusModel");
 const ErrorHander = require("../utils/errorhander");
 const catchAsynError = require("../middleware/catchAsynError");
 const ApiFeatures = require("../utils/apifeatures");
+const Product = require('../models/productModel');
 
 
 const GenerrateRandomString = (length) => {
@@ -83,7 +84,6 @@ exports.getAdminVouchers = catchAsynError(async (req, res, next) => {
 });
 //admin
 exports.updateVoucher = catchAsynError(async (req, res, next) => {
-    console.log('aweeweewewewewewewewewewewe');
 
   let voucher = await Voucher.findById(req.params.id);
 
@@ -96,6 +96,14 @@ exports.updateVoucher = catchAsynError(async (req, res, next) => {
     runValidators: true,
     useFindAndModify: false,
   });
+
+  let product = await Product.findOne({voucher:req.params.id});
+  product = await Product.findByIdAndUpdate(product._id,{voucherPrice:Math.round((product.price*1)*(1-(voucher.value*1/100)))}, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
+  console.log(product)
 
   res.status(200).json({
     success: true,

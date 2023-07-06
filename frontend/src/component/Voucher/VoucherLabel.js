@@ -1,11 +1,9 @@
 import './VoucherLabel.css';
-import {useSelector, useDispatch} from 'react-redux';
-import React, {Fragment, useEffect, useState} from 'react';
+import React from 'react';
 
 
 const VoucherLabel = ({ voucher }) => {
 
-    console.log(voucher)
     return (
     <div className="voucherNumberContainer">-{voucher.value}%</div>
     );

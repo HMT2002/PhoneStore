@@ -6,10 +6,6 @@ const User = require("../models/userModel");
 
 exports.isAuthenticatedUser = catchAsynError(async (req, res, next) => {
   let token;
-  console.log('jump 1');
-  console.log(req.cookies);
-  console.log('asd');
-  console.log(req.headers);
 
   // console.log(req.cookies);
   // console.log(req.headers);

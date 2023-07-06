@@ -36,6 +36,8 @@ exports.createProduct = catchAsynError(async (req, res, next) => {
   req.body.images = imagesLinks;
   req.body.user = req.user.id;
   req.body.voucher=req.voucher;
+  req.body.voucherPrice=Math.round((req.body.price*1)*(1-(req.voucher.value*1/100)));
+
 
   const product = await Product.create(req.body);
   req.product=product;
@@ -81,6 +83,8 @@ exports.getAllProducts = catchAsynError(async (req, res) => {
   //     console.log(product.voucher);
   //   }
   // });
+
+
 
   res.status(200).json({
     success: true,

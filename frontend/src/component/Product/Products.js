@@ -23,7 +23,7 @@ const Products = ({match}) => {
   const dispatch = useDispatch();
   const alert = useAlert();
   const [currentPage, setCurrentPage] = useState(1);
-  const [price, setPrice] = useState([0, 25000]);
+  const [price, setPrice] = useState([0, 100000]);
   const [upperPrice, setUpperPrice] = useState(0);
   const [downerPrice, setDownerPrice] = useState(0);
 
@@ -34,7 +34,7 @@ const Products = ({match}) => {
   };
 
   const priceHandler = newPrice => {
-    setPrice(newPrice);
+    setPrice(prevState=>newPrice);
   };
 
   const {

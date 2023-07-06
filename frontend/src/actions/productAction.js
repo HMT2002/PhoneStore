@@ -42,20 +42,29 @@ import {
   DELETE_VOUCHER_FAIL,
 } from '../constants/productConstants';
 
-export const getProduct = (keyword = "", currentPage = 1, price = [0, 25000], category) => async (dispatch) => {
+export const getProduct = (keyword = "", currentPage = 1, price = [0, 100000], category) => async (dispatch) => {
   try {
       dispatch({ type: ALL_PRODUCT_REQUEST });
 
-      let link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}`;;
+      let link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&voucherPrice[gte]=${price[0]}&voucherPrice[lte]=${price[1]}`;
       if (category) {
-          link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}`;
+          link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&voucherPrice[gte]=${price[0]}&voucherPrice[lte]=${price[1]}&category=${category}`;
       }
-      const { data } = await axios.get(link);
+      var { data } = await axios.get(link);
 
-      console.log(data)
       data.products.map(product=>{
         product.voucherPrice=Math.round( (product.price*1)*(1-(product.voucher.value*1/100)))
       })
+      // var reduced = data.products.reduce(function(filtered, product) {
+      //   if ((product.voucherPrice<=price[0])&&(product.voucherPrice>=price[1])) {
+      //      filtered.push(product);
+      //   }
+      //   return filtered;
+      // }, []);
+      // console.log(reduced.length)
+      console.log(data)
+
+
       dispatch({
           type: ALL_PRODUCT_SUCCESS,
           payload: data,

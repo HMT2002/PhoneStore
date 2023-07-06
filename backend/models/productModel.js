@@ -15,7 +15,9 @@ const productSchema = mongoose.Schema({
     required: [true, "Vui lòng nhập giá sản phẩm"],
     maxLength: [8, "Giá không thể nhỏ hơn 8 ký tự"],
   },
-  ratings: {
+  voucherPrice: {
+    type: Number,
+  },  ratings: {
     type: Number,
     default: 0,
   },
