@@ -106,7 +106,7 @@ const Products = ({match}) => {
             <ul className="categoryBox">
               {categories.map(category => (
                 <li
-                  className="category-link"
+                  className="category-link text-sm text-gray-600 mb-2 cursor-pointer"
                   key={category}
                   onClick={() => setCategory(category)}>
                   {category}
