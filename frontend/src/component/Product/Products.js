@@ -74,12 +74,13 @@ const Products = ({ match }) => {
               min={0}
               max={25000}
             />
-
+            <br></br>
+            <br></br>
             <Typography>Hãng</Typography>
-            <ul className="categoryBox">
+            <ul className="categoryBox mt-3">
               {categories.map((category) => (
                 <li
-                  className="category-link"
+                  className="category-link text-sm text-gray-600 mb-2 cursor-pointer"
                   key={category}
                   onClick={() => setCategory(category)}
                 >
