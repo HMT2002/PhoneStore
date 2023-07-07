@@ -4,7 +4,6 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.171);
   padding: 2vmax;
   color: rgba(0, 0, 0, 0.678);
-  font: 500 1.5vmax "Roboto";
   text-align: center;
 }
 
@@ -47,7 +46,7 @@
 
 .page-link {
   text-decoration: none;
-  font: 300 0.7vmax "Roboto";
+  font: 300 0.7vmax 'Roboto';
   color: rgb(80, 80, 80);
   transition: all 0.3s;
 }
@@ -87,40 +86,40 @@
   border: 1px solid rgba(0, 0, 0, 0.329);
 }
 
-.selectPriceRange{
-    background: rgb(238, 238, 238);
-    font-size: 12px;
-    padding: 4px 12px;
-    line-height: 16px;
-    display: inline-block;
-    position: relative;
-    color: rgb(56, 56, 61);
-    border-radius: 12px;
-    margin-bottom: 4px;
+.selectPriceRange {
+  background: rgb(238, 238, 238);
+  font-size: 12px;
+  padding: 4px 12px;
+  line-height: 16px;
+  display: inline-block;
+  position: relative;
+  color: rgb(56, 56, 61);
+  border-radius: 12px;
+  margin-bottom: 4px;
 }
 
-.inputPriceRange{
-    flex: 1 1 0%;
-    width: 77px;
-    height: 30px;
-    padding: 0px 8px;
-    background: rgb(255, 255, 255);
-    border-radius: 4px;
-    text-align: left;
-    border: 1px solid rgb(184, 184, 184);
-    outline: 0px;
-    font-size: 13px;
+.inputPriceRange {
+  flex: 1 1 0%;
+  width: 77px;
+  height: 30px;
+  padding: 0px 8px;
+  background: rgb(255, 255, 255);
+  border-radius: 4px;
+  text-align: left;
+  border: 1px solid rgb(184, 184, 184);
+  outline: 0px;
+  font-size: 13px;
 }
 
-.applyInputPriceRange{
-    background: rgb(255, 255, 255);
-    border: 1px solid rgb(11, 116, 229);
-    font-size: 12px;
-    color: rgb(11, 116, 229);
-    padding: 5px 15px;
-    width: 100%;
-    margin-top: 8px;
-    border-radius: 4px;
+.applyInputPriceRange {
+  background: rgb(255, 255, 255);
+  border: 1px solid rgb(11, 116, 229);
+  font-size: 12px;
+  color: rgb(11, 116, 229);
+  padding: 5px 15px;
+  width: 100%;
+  margin-top: 8px;
+  border-radius: 4px;
 }
 
 @media screen and (max-width: 600px) {
@@ -131,10 +130,10 @@
   }
 
   .page-link {
-    font: 300 1.7vmax "Roboto";
+    font: 300 1.7vmax 'Roboto';
   }
 
   .category-link {
-    font: 400 1.8vmax "Roboto";
+    font: 400 1.8vmax 'Roboto';
   }
 }

@@ -1,6 +1,6 @@
 .banner {
   background-image: linear-gradient(to right, black, white);
-  height: 100vmin;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -10,12 +10,12 @@
 }
 
 .banner::after {
-  content: "";
+  content: '';
   width: 100vw;
   height: 100vmin;
   background-color: #ffffff;
   position: absolute;
-  top: 0%;
+  bottom: -1px;
   left: 0;
   clip-path: polygon(100% 68%, 0 100%, 100% 100%);
   max-width: 100%;
@@ -23,9 +23,8 @@
 
 .homeHeading {
   text-align: center;
-  font-size: 1.4vmax;
   border-bottom: 1px solid rgba(21, 21, 21, 0.5);
-  width: 20vmax;
+  width: 180px;
   padding: 1vmax;
   margin: 5vmax auto;
   color: rgb(0, 0, 0, 0.7);
@@ -34,15 +33,13 @@
 .container {
   display: flex;
   margin: 2vmax auto;
-  width: 80vw;
   flex-wrap: wrap;
   justify-content: center;
   max-width: 100%;
 }
 
-
 .productCard {
-  width: 14vmax;
+  /* width: 100%; */
   display: flex;
   flex-direction: column;
   text-decoration: none;

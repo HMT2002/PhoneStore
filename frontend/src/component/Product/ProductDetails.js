@@ -49,10 +49,10 @@ const ProductDetails = ({match}) => {
   const [isVoucher, setIsVoucher] = useState(false);
 
   const getVoucherDetail = async () => {
-    const reqVoucher=await fetch('/api/v1/product/'+match.params.id);
-    const data=await reqVoucher.json();
-    console.log(data)
-    if (data.product.voucher.value*1===0) {
+    const reqVoucher = await fetch('/api/v1/product/' + match.params.id);
+    const data = await reqVoucher.json();
+    console.log(data);
+    if (data.product.voucher.value * 1 === 0) {
       console.log('No voucher');
       setIsVoucher(false);
     } else {
@@ -76,7 +76,7 @@ const ProductDetails = ({match}) => {
   };
 
   const addToCartHandler = () => {
-    dispatch(addItemsToCart(match.params.id, quantity,voucher));
+    dispatch(addItemsToCart(match.params.id, quantity, voucher));
     alert.success('Đã thêm vào giỏ hàng');
   };
 
@@ -124,7 +124,7 @@ const ProductDetails = ({match}) => {
         <Fragment>
           <MetaData title={`${product.name} - Mobile Store`} />
           <div className="ProductDetails">
-            <div>
+            <div className="w-full mt-8 lg:mt-0 lg:w-2/5">
               <Carousel>
                 {product.images &&
                   product.images.map((item, i) => (
@@ -140,7 +140,7 @@ const ProductDetails = ({match}) => {
             <div>
               <div className="detailsBlock-1">
                 <h2>{product.name}</h2>
-                <p>Sản phẩm # {product._id}</p>
+                <p className="text-sm">Sản phẩm # {product._id}</p>
               </div>
               <div className="detailsBlock-2">
                 <Rating {...options} />
@@ -153,7 +153,8 @@ const ProductDetails = ({match}) => {
               <div className="detailsBlock-3">
                 {isVoucher ? (
                   <div className="containerPriceAndVoucher">
-                    <h1 className='originalPrice'>{`${product.price}$`}</h1><h1>{`${product.voucherPrice*1 }$`}</h1>
+                    <h1 className="originalPrice text-xl font-bold">{`${product.price}$`}</h1>
+                    <h1>{`${product.voucherPrice * 1}$`}</h1>
 
                     <div className="voucherContainer-ProductDetail">
                       <VoucherLabel voucher={voucher} />
@@ -162,7 +163,8 @@ const ProductDetails = ({match}) => {
                 ) : (
                   <div className="containerPriceNoVoucher">
                     <h1>{`${product.price}$`}</h1>
-                  </div>)}
+                  </div>
+                )}
 
                 <div className="detailsBlock-3-1">
                   <div className="detailsBlock-3-1-1">
