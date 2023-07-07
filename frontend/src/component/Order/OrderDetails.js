@@ -9,6 +9,7 @@ import Loader from '../layout/Loader/Loader';
 import {useAlert} from 'react-alert';
 import EditIcon from '@material-ui/icons/Edit';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
+import { format, getDate } from "date-fns";
 
 const OrderDetails = ({match}) => {
   const {order, error, loading} = useSelector(state => state.orderDetails);
@@ -16,7 +17,7 @@ const OrderDetails = ({match}) => {
   const alert = useAlert();
 
   const [showModal, setShowModal] = useState(false);
-  const [guatantee, setGuarantee] = useState();
+  const [guatantee, setGuarantee] = useState({expireDate:new Date()});
 
   const showGuarantees = guarantee => {
     setGuarantee(guarantee);
@@ -141,6 +142,7 @@ const OrderDetails = ({match}) => {
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
                   <div>{guatantee.description}</div>
+                  <div>Ngày hết hạn bảo hành: { format(new Date( guatantee.expireDate), "dd-MM-yyyy").toString()}</div>
                   {/* <div>
                     {new Date(guatantee.createDate).toString()}
                   </div> */}

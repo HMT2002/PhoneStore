@@ -41,7 +41,7 @@ exports.getSingleOrder = catchAsynError(async (req, res, next) => {
         "name email"
     ).populate(
         'orderItems.guaranteen',
-        'code createDate description'
+        'code createDate description expireDate'
     );
     if (!order) {
         return next(new ErrorHander("ID đơn hàng không hợp lệ", 404));
