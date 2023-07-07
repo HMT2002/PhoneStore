@@ -66,6 +66,13 @@ const ProductList = ({history}) => {
     // myForm.set('product', discountProduct);
     // myForm.set('description', description);
 
+
+    if(value*1>=100){
+      alert.error('Tỉ lệ giảm giá không được trên 100%');
+      return;
+
+    }
+
     const voucherData = {
       expireDate: endDate,
       value: value,

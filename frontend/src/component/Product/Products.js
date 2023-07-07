@@ -80,34 +80,18 @@ const Products = ({match}) => {
               max={25000}
             /> */}
 
-            <div
-              class="priceRange"
-              onClick={() => {
-                priceHandler([0, 9999]);
-              }}>
-              <div class="selectPriceRange">Below 10000</div>
-            </div>
-            <div
-              class="priceRange"
-              onClick={() => {
-                priceHandler([10000, 30000]);
-              }}>
-              <div class="selectPriceRange">10000 -&gt; 30000</div>
-            </div>
-            <div
-              class="priceRange"
-              onClick={() => {
-                priceHandler([30001, 50000]);
-              }}>
-              <div class="selectPriceRange">30001 -&gt; 50000</div>
-            </div>
-            <div
-              class="priceRange"
-              onClick={() => {
-                priceHandler([50001, 100000]);
-              }}>
-              <div class="selectPriceRange">Above 500000</div>
-            </div>
+              <div class="priceRange" onClick={()=>{ priceHandler([0, 999])}}>
+                <div class="selectPriceRange">Dưới 1000</div>
+              </div>
+              <div class="priceRange" onClick={()=>{priceHandler([1000, 3000])} }>
+                <div class="selectPriceRange">1000 -&gt; 3000</div>
+              </div>
+              <div class="priceRange" onClick={()=>{priceHandler([3001, 5000])} }>
+                <div class="selectPriceRange">3001 -&gt; 5000</div>
+              </div>
+              <div class="priceRange" onClick={()=>{ priceHandler([5001, 10000])}}>
+                <div class="selectPriceRange">Trên 5000</div>
+              </div>
             <div class="price-small-text">Chọn khoảng giá</div>
             <div class="inputPriceRangeHolder">
               <input
