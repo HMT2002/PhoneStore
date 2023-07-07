@@ -21,46 +21,40 @@
 .ProductDetails > div:last-child {
   align-items: flex-start;
 }
-.voucherContainer-ProductDetail{
-    background-color: red;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    align-items: center;
-    position: relative;
-    text-align: center;
-    overflow: hidden;
-    float: left;
-    margin: 10px;
-    text-align: center;
-  }
-
-  .containerPriceAndVoucher{
-    overflow: hidden;
-    position: relative;
-  }
-  .containerPriceNoVoucher{
-    overflow: hidden;
-    position: relative;
-    display: flex;
-  }
-.CarouselImage {
-    width: 20vmax;
+.voucherContainer-ProductDetail {
+  background-color: red;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  align-items: center;
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+  float: left;
+  margin: 10px;
+  text-align: center;
 }
 
-.detailsBlock-1>h2 {
-    color: rgb(54, 54, 54);
-    font: 600 1.6vmax "Roboto";
+.containerPriceAndVoucher {
+  overflow: hidden;
+  position: relative;
+}
+.containerPriceNoVoucher {
+  overflow: hidden;
+  position: relative;
+  display: flex;
+}
+.CarouselImage {
+  width: 20vmax;
+}
+
+.detailsBlock-1 > h2 {
+  color: rgb(54, 54, 54);
+  font: 600 1.6vmax 'Roboto';
 }
 
 .voucherContainer {
-    position: relative;
-}
-
-
-.detailsBlock-1>p {
-    color: rgba(54, 54, 54, 0.582);
-    font: 200 0.6vmax cursive;
+  position: relative;
 }
 
 .detailsBlock-2 {
@@ -77,32 +71,28 @@
   width: 70%;
 }
 
-.detailsBlock-3>h1 {
-    color: rgba(17, 17, 17, 0.795);
-    font: 400 1.8vmax "Franklin Gothic Medium";
-    margin: 1vmax 0;
-    float: left;
+.detailsBlock-3 > h1 {
+  color: rgba(17, 17, 17, 0.795);
+  margin: 1vmax 0;
+  float: left;
 }
 
-.detailsBlock-3>.containerPriceNoVoucher>h1 {
-    color: rgba(17, 17, 17, 0.795);
-    font: 400 1.8vmax "Franklin Gothic Medium";
-    margin: 1vmax 0;
-    float: left;
-    margin-left: 1vmax;
-
+.detailsBlock-3 > .containerPriceNoVoucher > h1 {
+  color: rgba(17, 17, 17, 0.795);
+  margin: 1vmax 0;
+  float: left;
+  margin-left: 1vmax;
 }
-  .originalPrice{
-    text-decoration-line: line-through;
-  
-  }
+.originalPrice {
+  text-decoration-line: line-through;
+}
 
-.detailsBlock-3>.containerPriceAndVoucher>h1 {
-    color: rgba(17, 17, 17, 0.795);
-    font: 400 1.8vmax "Franklin Gothic Medium";
-    margin: 1vmax 0;
-    float: left;
-    margin-left: 1vmax;
+.detailsBlock-3 > .containerPriceAndVoucher > h1 {
+  color: rgba(17, 17, 17, 0.795);
+  font: 400 1.8vmax 'Franklin Gothic Medium';
+  margin: 1vmax 0;
+  float: left;
+  margin-left: 1vmax;
 }
 
 .detailsBlock-3-1-1 > button:hover {
@@ -131,43 +121,41 @@
   outline: none;
 }
 
-.detailsBlock-3-1-1>input {
-    border: none;
-    padding: 0.5vmax;
-    width: 3vmax;
-    text-align: center;
-    outline: none;
-    font: 400 0.8vmax "Roboto";
-    color: rgba(0, 0, 0, 0.616);
-    font-weight: bold;
+.detailsBlock-3-1-1 > input {
+  border: none;
+  padding: 0.5vmax;
+  width: 3vmax;
+  text-align: center;
+  outline: none;
+  font: 400 0.8vmax 'Roboto';
+  color: rgba(0, 0, 0, 0.616);
+  font-weight: bold;
 }
 
-
-
-.detailsBlock-3-1>button:last-child {
-    border: none;
-    cursor: pointer;
-    color: white;
-    transition: all 0.5s;
-    background-color: rgba(0, 0, 0, 0.616);
-    font: 500 0.7vmax "Roboto";
-    border-radius: 20px;
-    padding: 0.5vmax 2vmax;
-    margin: 1vmax;
-    outline: none;
+.detailsBlock-3-1 > button:last-child {
+  border: none;
+  cursor: pointer;
+  color: white;
+  transition: all 0.5s;
+  background-color: rgba(0, 0, 0, 0.616);
+  font: 500 0.7vmax 'Roboto';
+  border-radius: 20px;
+  padding: 0.5vmax 2vmax;
+  margin: 1vmax;
+  outline: none;
 }
 
-.detailsBlock-3-1>button:last-child:hover {
-    background-color: rgba(0, 0, 0, 0.80);
+.detailsBlock-3-1 > button:last-child:hover {
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
-.detailsBlock-3>p {
-    border-top: 1px solid rgba(0, 0, 0, 0.205);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.205);
-    padding: 1vmax 0;
-    color: rgba(0, 0, 0, 0.651);
-    font: 400 1vmax "Roboto";
-    margin: 1vmax 0;
+.detailsBlock-3 > p {
+  border-top: 1px solid rgba(0, 0, 0, 0.205);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.205);
+  padding: 1vmax 0;
+  color: rgba(0, 0, 0, 0.651);
+  font: 400 1vmax 'Roboto';
+  margin: 1vmax 0;
 }
 
 .detailsBlock-4 {

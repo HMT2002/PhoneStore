@@ -34,7 +34,7 @@ const Products = ({match}) => {
   };
 
   const priceHandler = newPrice => {
-    setPrice(prevState=>newPrice);
+    setPrice(prevState => newPrice);
   };
 
   const {
@@ -62,8 +62,8 @@ const Products = ({match}) => {
       ) : (
         <Fragment>
           <MetaData title="Sản Phẩm-MOBILE STORE" />
-          <h2 className="productsHeading">Sản phẩm</h2>
-          <div className="products">
+          <h2 className="productsHeading text-xl lg:text-2xl">Sản phẩm</h2>
+          <div className="products mt-5">
             {products &&
               products.map(product => (
                 <ProductCard key={product._id} product={product} />
@@ -80,25 +80,63 @@ const Products = ({match}) => {
               max={25000}
             /> */}
 
-              <div class="priceRange" onClick={()=>{ priceHandler([0, 9999])}}>
-                <div class="selectPriceRange">Below 10000</div>
-              </div>
-              <div class="priceRange" onClick={()=>{priceHandler([10000, 30000])} }>
-                <div class="selectPriceRange">10000 -&gt; 30000</div>
-              </div>
-              <div class="priceRange" onClick={()=>{priceHandler([30001, 50000])} }>
-                <div class="selectPriceRange">30001 -&gt; 50000</div>
-              </div>
-              <div class="priceRange" onClick={()=>{ priceHandler([50001, 100000])}}>
-                <div class="selectPriceRange">Above 500000</div>
-              </div>
+            <div
+              class="priceRange"
+              onClick={() => {
+                priceHandler([0, 9999]);
+              }}>
+              <div class="selectPriceRange">Below 10000</div>
+            </div>
+            <div
+              class="priceRange"
+              onClick={() => {
+                priceHandler([10000, 30000]);
+              }}>
+              <div class="selectPriceRange">10000 -&gt; 30000</div>
+            </div>
+            <div
+              class="priceRange"
+              onClick={() => {
+                priceHandler([30001, 50000]);
+              }}>
+              <div class="selectPriceRange">30001 -&gt; 50000</div>
+            </div>
+            <div
+              class="priceRange"
+              onClick={() => {
+                priceHandler([50001, 100000]);
+              }}>
+              <div class="selectPriceRange">Above 500000</div>
+            </div>
             <div class="price-small-text">Chọn khoảng giá</div>
             <div class="inputPriceRangeHolder">
-              <input pattern="[0-9]*" placeholder="From" class="inputPriceRange" onChange={(e)=>{ setDownerPrice(prevState=>{return e.target.value})}}/>
+              <input
+                pattern="[0-9]*"
+                placeholder="From"
+                class="inputPriceRange"
+                onChange={e => {
+                  setDownerPrice(prevState => {
+                    return e.target.value;
+                  });
+                }}
+              />
               <span>-</span>
-              <input pattern="[0-9]*" placeholder="to" class="inputPriceRange" onChange={(e)=>{setUpperPrice(prevState=>{return e.target.value})}}/>
+              <input
+                pattern="[0-9]*"
+                placeholder="to"
+                class="inputPriceRange"
+                onChange={e => {
+                  setUpperPrice(prevState => {
+                    return e.target.value;
+                  });
+                }}
+              />
             </div>
-            <button className='applyInputPriceRange' onClick={()=>{priceHandler([downerPrice,upperPrice])}}>
+            <button
+              className="applyInputPriceRange"
+              onClick={() => {
+                priceHandler([downerPrice, upperPrice]);
+              }}>
               Áp dụng
             </button>
 
